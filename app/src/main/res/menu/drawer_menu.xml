@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <item android:title="Années"
+        android:id="@+id/item_annee">
+        <menu android:id="@+id/menu_annees">
+
+
+        </menu>
+    </item>
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_annee"
+            android:title="Gérer les années" />
+        <item
+            android:id="@+id/nav_share"
+            android:title="Invite tes amis" />
+        <item
+            android:id="@+id/nav_eval"
+            android:title="Evaluer l'application" />
+        <item
+            android:id="@+id/nav_help"
+            android:title="Aide" />
+    </group>
+
+</menu>

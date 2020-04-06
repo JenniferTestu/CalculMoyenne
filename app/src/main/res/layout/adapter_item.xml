@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="10dp">
+
+        <Button
+            android:id="@+id/rond"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:background="@drawable/round_blue"
+            android:text="@string/item_default_moy"
+            android:textSize="50px"
+            app:layout_constraintWidth_percent="0.5"
+            android:layout_marginRight="10dp"
+            android:textColor="@color/colorText"></Button>
+
+        <TextView
+            android:id="@+id/item_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/item_default_name"
+            android:layout_toRightOf="@+id/rond"
+            android:textColor="@color/colorText"></TextView>
+
+        <TextView
+            android:id="@+id/item_coef"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/item_name"
+            android:text="@string/item_default_coef"
+            android:layout_toRightOf="@+id/rond"
+            android:textColor="@color/colorText"></TextView>
+
+        <TextView
+            android:id="@+id/item_derDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/item_coef"
+            android:text="@string/item_default_derDate"
+            android:layout_toRightOf="@+id/rond"
+            android:textColor="@color/colorText"></TextView>
+
+
+        <TextView
+            android:id="@+id/matiereOptions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:text="&#8942;"
+            android:textAppearance="?android:textAppearanceLarge" />
+
+    </RelativeLayout>
+
+
+
+</LinearLayout>
