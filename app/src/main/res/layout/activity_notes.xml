@@ -13,8 +13,9 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/list_notes_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginVertical="70px"
+        android:layout_height="550dp"
+        android:paddingVertical="80px"
+        android:scrollbars="vertical"
         app:layout_constraintStart_toStartOf="@+id/barre_moy"
         app:layout_constraintTop_toBottomOf="@+id/barre_moy"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"></androidx.recyclerview.widget.RecyclerView>
@@ -25,7 +26,8 @@
         android:layout_height="75dp"
         android:background="@android:drawable/ic_menu_add"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent"></Button>
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginRight="8dp"></Button>
 
     <LinearLayout
         android:id="@+id/barre_moy"

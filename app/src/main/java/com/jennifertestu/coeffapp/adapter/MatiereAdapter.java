@@ -54,10 +54,10 @@ public class MatiereAdapter extends RecyclerView.Adapter<MatiereAdapter.MatiereV
 
         Matiere m = matiereList.get(position);
         holder.nomView.setText(m.getNom());
-        holder.coefView.setText(Integer.toString(m.getCoef()));
+        holder.coefView.setText("Coefficient : "+Integer.toString(m.getCoef()));
         if(m.getDateDerniereNote()!=null) {
             SimpleDateFormat formater = new SimpleDateFormat("d MMMM yyyy", Locale.FRANCE);
-            holder.derDateView.setText(formater.format(m.getDateDerniereNote()));
+            holder.derDateView.setText("Date de la dernière note : "+formater.format(m.getDateDerniereNote()));
         }
 
         Double moy = m.calculerMoy();
