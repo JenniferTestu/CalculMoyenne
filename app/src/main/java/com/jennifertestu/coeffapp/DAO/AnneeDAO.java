@@ -25,5 +25,9 @@ public interface AnneeDAO {
     @Query("SELECT * FROM Annee")
     List<Annee> getAll();
 
+    //@Query("SELECT Count(*) from Annee")
+    @Query("SELECT count(1) WHERE EXISTS (SELECT * FROM Annee)")
+    int count();
+
 
 }
