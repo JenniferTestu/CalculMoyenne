@@ -106,7 +106,6 @@ public class UpdateNoteActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                // TODO Auto-generated method stub
 
                 Locale.setDefault(Locale.FRANCE);
 

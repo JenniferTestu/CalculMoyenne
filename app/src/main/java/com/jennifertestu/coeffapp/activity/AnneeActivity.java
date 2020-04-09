@@ -141,6 +141,8 @@ public class AnneeActivity extends AppCompatActivity {
         MenuItem boutonPartager = menu.findItem(R.id.nav_share);
         MenuItem boutonEvaluer = menu.findItem(R.id.nav_eval);
         MenuItem boutonAide = menu.findItem(R.id.nav_help);
+        MenuItem boutonSave = menu.findItem(R.id.nav_save);
+
 
         boutonGererAnnees.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener(){
 
@@ -154,7 +156,7 @@ public class AnneeActivity extends AppCompatActivity {
 
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                String lien = "https://play.google.com";
+                String lien = getString (R.string.lien_partager);
 
                 Intent sendIntent = new Intent();
                 sendIntent.setAction(Intent.ACTION_SEND);
@@ -171,10 +173,12 @@ public class AnneeActivity extends AppCompatActivity {
 
             @Override
             public boolean onMenuItemClick(MenuItem item) {
+                String lien = getString (R.string.lien_evaluer);
+
                 try {
                     Intent viewIntent =
                             new Intent("android.intent.action.VIEW",
-                                    Uri.parse("https://play.google.com"));
+                                    Uri.parse(lien));
                     startActivity(viewIntent);
                 }catch(Exception e) {
                     Toast.makeText(getApplicationContext(),"Impossible d'accèder à la page, essayez plus tard ...",
@@ -189,6 +193,20 @@ public class AnneeActivity extends AppCompatActivity {
 
             @Override
             public boolean onMenuItemClick(MenuItem item) {
+                return false;
+            }
+        });
+
+        boutonSave.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener(){
+
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+
+                finish();
+
+                Intent activityBackup = new Intent(getApplicationContext(), BackupActivity.class);
+                startActivity(activityBackup);
+
                 return false;
             }
         });
