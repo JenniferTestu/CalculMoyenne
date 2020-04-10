@@ -1,11 +1,14 @@
 package com.jennifertestu.coeffapp.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -28,6 +31,7 @@ import com.jennifertestu.coeffapp.AppDatabase;
 import com.jennifertestu.coeffapp.DatabaseClient;
 import com.jennifertestu.coeffapp.R;
 import com.jennifertestu.coeffapp.model.Annee;
+import com.jennifertestu.coeffapp.ui.MenuNav;
 
 
 import java.io.File;
@@ -41,7 +45,7 @@ public class BackupActivity extends AppCompatActivity {
     private Annee anneeActive;
     private Button boutonSave, boutonRest;
     private TextView tv;
-    private String DirectoryName;
+    private MenuNav menuNav;
 
 
     @Override
@@ -84,9 +88,16 @@ public class BackupActivity extends AppCompatActivity {
         anneeActive = new Annee(nom,nbperiode);
         anneeActive.setId(id);
 
-        creationBoutonsMenu();
+        NavigationView navView = (NavigationView) findViewById(R.id.nav_view);
+        menuNav = new MenuNav(getApplicationContext(),navView);
+        menuNav.creer();
 
-        autresBoutonsMenu();
+        if(ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
+        || ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                requestPermissions(new String[] { Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, 2);
+            }
+        }
 
     }
 
@@ -154,7 +165,7 @@ public class BackupActivity extends AppCompatActivity {
                 Toast.makeText(getBaseContext(), backupDB.toString(),
                         Toast.LENGTH_LONG).show();
                 // On actualise le nav menu
-                creationBoutonsMenu();
+                menuNav.creer();
                 tv.setText("Import réussi !");
             }
         } catch (Exception e) {
@@ -164,146 +175,6 @@ public class BackupActivity extends AppCompatActivity {
         }
     }
 
-    private void creationBoutonsMenu(){
-
-        NavigationView navView = (NavigationView) findViewById(R.id.nav_view);
-        navView.setItemIconTintList(null);
-        final SubMenu menu = navView.getMenu().getItem(0).getSubMenu();
-
-        class LesAnnees extends AsyncTask<Void, Void, List<Annee>> {
-
-            @Override
-            protected List<Annee> doInBackground(Void... voids) {
-                List<Annee> anneeList = DatabaseClient
-                        .getInstance(getApplicationContext())
-                        .getAppDatabase()
-                        .anneeDAO()
-                        .getAll();
-
-                return anneeList;
-            }
-
-            @Override
-            protected void onPostExecute(List<Annee> annees) {
-                super.onPostExecute(annees);
-                for(final Annee a : annees) {
-                    MenuItem item = menu.add(a.getNom());
-                    if(a.getId()==anneeActive.getId()) {
-                        item.setIcon(R.drawable.ic_check_circle);
-                    }
-                    item.setOnMenuItemClickListener (new MenuItem.OnMenuItemClickListener(){
-                        @Override
-                        public boolean onMenuItemClick (MenuItem item){
-
-                            // Mise a jour de l'année active
-                            anneeActive = a;
-
-                            SharedPreferences.Editor editor = getSharedPreferences("annee_active", MODE_PRIVATE).edit();
-                            editor.putInt("id", a.getId());
-                            editor.putString("nom", a.getNom());
-                            editor.putInt("nbperiode", a.getNbPeriodes());
-                            editor.apply();
-
-                            // Rafraichir l'activité
-                            finish();
-                            Intent mainAnnee = new Intent(getApplicationContext(), MainActivity.class);
-                            startActivity(mainAnnee);
-                            return true;
-                        }
-                    });
-                }
-
-
-            }
-        }
-
-
-        LesAnnees la = new LesAnnees();
-        la.execute();
-
-
-    }
-
-    private void autresBoutonsMenu(){
-
-        NavigationView navView = (NavigationView) findViewById(R.id.nav_view);
-        Menu menu = navView.getMenu();
-
-        MenuItem boutonGererAnnees = menu.findItem(R.id.nav_annee);
-        MenuItem boutonPartager = menu.findItem(R.id.nav_share);
-        MenuItem boutonEvaluer = menu.findItem(R.id.nav_eval);
-        MenuItem boutonAide = menu.findItem(R.id.nav_help);
-        MenuItem boutonSave = menu.findItem(R.id.nav_save);
-
-
-        boutonGererAnnees.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener(){
-
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-
-                finish();
-
-                Intent activityAnnee = new Intent(getApplicationContext(), AnneeActivity.class);
-                startActivity(activityAnnee);
-
-                return false;
-            }
-        });
-
-        boutonPartager.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener(){
-
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                String lien = getString (R.string.lien_partager);
-
-                Intent sendIntent = new Intent();
-                sendIntent.setAction(Intent.ACTION_SEND);
-                sendIntent.putExtra(Intent.EXTRA_TEXT, "J'utilise cette application pour calculer mes notes :  "+lien);
-                sendIntent.setType("text/plain");
-
-                Intent shareIntent = Intent.createChooser(sendIntent, null);
-                startActivity(shareIntent);
-                return false;
-            }
-        });
-
-        boutonEvaluer.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener(){
-
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                String lien = getString (R.string.lien_evaluer);
-
-                try {
-                    Intent viewIntent =
-                            new Intent("android.intent.action.VIEW",
-                                    Uri.parse(lien));
-                    startActivity(viewIntent);
-                }catch(Exception e) {
-                    Toast.makeText(getApplicationContext(),"Impossible d'accèder à la page, essayez plus tard ...",
-                            Toast.LENGTH_LONG).show();
-                    e.printStackTrace();
-                }
-                return false;
-            }
-        });
-
-        boutonAide.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener(){
-
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                return false;
-            }
-        });
-
-        boutonSave.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener(){
-
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-
-                return false;
-            }
-        });
-    }
 
     // Quand le fichier de sauvegarde a été choisi
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

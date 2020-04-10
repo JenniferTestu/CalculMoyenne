@@ -7,6 +7,35 @@
     android:background="@color/colorPrimary"
     tools:context=".activity.BackupActivity">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimary"
+        android:paddingHorizontal="20px"
+        android:paddingVertical="60px">
+
+    <LinearLayout
+        android:id="@+id/barre_moy"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/spinner">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/moy_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginVertical="60px"
+            android:text="Sauvegarde de données "
+            android:textSize="80px"
+            android:fontFamily="@font/erasdust"></androidx.appcompat.widget.AppCompatTextView>
+
+    </LinearLayout>
+
     <LinearLayout
         android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
@@ -44,6 +73,8 @@
             android:fontFamily="@font/erasdust"></TextView>
 
     </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view"

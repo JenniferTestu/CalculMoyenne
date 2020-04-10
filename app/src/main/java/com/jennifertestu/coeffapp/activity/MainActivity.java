@@ -24,6 +24,7 @@ import com.jennifertestu.coeffapp.DatabaseClient;
 import com.jennifertestu.coeffapp.R;
 import com.jennifertestu.coeffapp.adapter.MatiereAdapter;
 import com.jennifertestu.coeffapp.model.*;
+import com.jennifertestu.coeffapp.ui.MenuNav;
 
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
@@ -40,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<String> arraySpinner = new ArrayList<String>();
     private Annee anneeActive;
     private int periodeSelect;
+    private MenuNav menuNav;
+
 
     // A la création de l'activité
     @Override
@@ -113,11 +116,13 @@ public class MainActivity extends AppCompatActivity {
 
 
         // Appel de la fonction pour la création du menu pour naviguer entre les années
-        creationBoutonsMenu();
         // Appel de la fonction pour l'affichage des matières de l'année en cours
         lesMatieres();
         // Appel de la fonction pour les boutons du menu
-        autresBoutonsMenu();
+        NavigationView navView = (NavigationView) findViewById(R.id.nav_view);
+        menuNav = new MenuNav(getApplicationContext(),navView);
+        menuNav.creer();
+
 
         // Création du bouton pour ajouter une matière
         Button boutonAjouter = (Button)findViewById(R.id.bouton_ajouter);
@@ -225,148 +230,4 @@ public class MainActivity extends AppCompatActivity {
         lm.execute();
     }
 
-    private void creationBoutonsMenu(){
-
-        NavigationView navView = (NavigationView) findViewById(R.id.nav_view);
-        navView.setItemIconTintList(null);
-        final SubMenu menu = navView.getMenu().getItem(0).getSubMenu();
-
-        class LesAnnees extends AsyncTask<Void, Void, List<Annee>> {
-
-            @Override
-            protected List<Annee> doInBackground(Void... voids) {
-                List<Annee> anneeList = DatabaseClient
-                        .getInstance(getApplicationContext())
-                        .getAppDatabase()
-                        .anneeDAO()
-                        .getAll();
-
-                return anneeList;
-            }
-
-            @Override
-            protected void onPostExecute(List<Annee> annees) {
-                super.onPostExecute(annees);
-                for(final Annee a : annees) {
-                    MenuItem item = menu.add(a.getNom());
-                    if(a.getId()==anneeActive.getId()) {
-                        item.setIcon(R.drawable.ic_check_circle);
-                    }
-                    item.setOnMenuItemClickListener (new MenuItem.OnMenuItemClickListener(){
-                        @Override
-                        public boolean onMenuItemClick (MenuItem item){
-
-                            // Mise a jour de l'année active
-                            anneeActive = a;
-
-                            SharedPreferences.Editor editor = getSharedPreferences("annee_active", MODE_PRIVATE).edit();
-                            editor.putInt("id", a.getId());
-                            editor.putString("nom", a.getNom());
-                            editor.putInt("nbperiode", a.getNbPeriodes());
-                            editor.apply();
-
-                            // Rafraichir l'activité
-                            finish();
-                            startActivity(getIntent());
-                            return true;
-                        }
-                    });
-                }
-
-
-            }
-        }
-
-
-        LesAnnees la = new LesAnnees();
-        la.execute();
-
-
-    }
-
-    private void autresBoutonsMenu(){
-
-        NavigationView navView = (NavigationView) findViewById(R.id.nav_view);
-        Menu menu = navView.getMenu();
-
-        MenuItem boutonGererAnnees = menu.findItem(R.id.nav_annee);
-        MenuItem boutonPartager = menu.findItem(R.id.nav_share);
-        MenuItem boutonEvaluer = menu.findItem(R.id.nav_eval);
-        MenuItem boutonAide = menu.findItem(R.id.nav_help);
-        MenuItem boutonSave = menu.findItem(R.id.nav_save);
-
-
-        boutonGererAnnees.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener(){
-
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-
-                finish();
-
-                Intent activityAnnee = new Intent(getApplicationContext(), AnneeActivity.class);
-                startActivity(activityAnnee);
-
-                return false;
-            }
-        });
-
-        boutonPartager.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener(){
-
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                String lien = getString (R.string.lien_partager);
-
-                Intent sendIntent = new Intent();
-                sendIntent.setAction(Intent.ACTION_SEND);
-                sendIntent.putExtra(Intent.EXTRA_TEXT, "J'utilise cette application pour calculer mes notes :  "+lien);
-                sendIntent.setType("text/plain");
-
-                Intent shareIntent = Intent.createChooser(sendIntent, null);
-                startActivity(shareIntent);
-                return false;
-            }
-        });
-
-        boutonEvaluer.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener(){
-
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                String lien = getString (R.string.lien_evaluer);
-
-                try {
-                    Intent viewIntent =
-                            new Intent("android.intent.action.VIEW",
-                                    Uri.parse(lien));
-                    startActivity(viewIntent);
-                }catch(Exception e) {
-                    Toast.makeText(getApplicationContext(),"Impossible d'accèder à la page, essayez plus tard ...",
-                            Toast.LENGTH_LONG).show();
-                    e.printStackTrace();
-                }
-                return false;
-            }
-        });
-
-        boutonAide.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener(){
-
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                return false;
-            }
-        });
-
-        boutonSave.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener(){
-
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-
-                finish();
-
-                Intent activityBackup = new Intent(getApplicationContext(), BackupActivity.class);
-                startActivity(activityBackup);
-
-                return false;
-            }
-        });
-    }
 }
