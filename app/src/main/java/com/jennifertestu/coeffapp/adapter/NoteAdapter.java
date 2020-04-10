@@ -1,5 +1,6 @@
 package com.jennifertestu.coeffapp.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -16,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.jennifertestu.coeffapp.DatabaseClient;
 import com.jennifertestu.coeffapp.R;
+import com.jennifertestu.coeffapp.activity.NotesActivity;
 import com.jennifertestu.coeffapp.activity.UpdateNoteActivity;
 import com.jennifertestu.coeffapp.model.Matiere;
 import com.jennifertestu.coeffapp.model.Note;
@@ -32,12 +34,13 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
     private List<Note> noteList;
     private Matiere matiere;
     private DecimalFormat df = new DecimalFormat("#.##");
+    private Button button;
 
-
-    public NoteAdapter(Context mCtx, List<Note> noteList, Matiere matiere) {
+    public NoteAdapter(Context mCtx, List<Note> noteList, Matiere matiere,Button button) {
         this.mCtx = mCtx;
         this.noteList = noteList;
         this.matiere=matiere;
+        this.button=button;
     }
 
     @Override
@@ -179,6 +182,24 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
                 noteList.remove(n);
                 notifyDataSetChanged();
                 Toast.makeText(mCtx, "Note supprimée", Toast.LENGTH_LONG).show();
+
+                matiere.setListeNotes(noteList);
+                matiere.calculerMoy();
+
+                if(matiere.getMoy() >= 10 && matiere.getMoy() < 12){
+                    button.setText(df.format(matiere.getMoy()));
+                    button.setBackgroundResource(R.drawable.round_orange);
+                }else if (matiere.getMoy() >= 0 && matiere.getMoy() < 10){
+                    button.setText(df.format(matiere.getMoy()));
+                    button.setBackgroundResource(R.drawable.round_red);
+                }else if(matiere.getMoy() >= 12){
+                    button.setText(df.format(matiere.getMoy()));
+                    button.setBackgroundResource(R.drawable.round_blue);
+                }else {
+                    button.setText("/");
+                    button.setBackgroundResource(R.drawable.round_blue);
+                }
+
             }
         }
 

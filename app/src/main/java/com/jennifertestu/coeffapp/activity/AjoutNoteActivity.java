@@ -61,6 +61,8 @@ public class AjoutNoteActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 finish();
+                Intent intent = new Intent(getApplicationContext(), NotesActivity.class);
+                startActivity(intent);
 
             }
         });
@@ -193,7 +195,7 @@ public class AjoutNoteActivity extends AppCompatActivity {
         AjoutNote an = new AjoutNote();
         an.execute();
 
-        finish();
+        //finish();
 
     }
 

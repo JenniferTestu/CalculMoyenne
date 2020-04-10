@@ -77,6 +77,8 @@ public class AjoutMatiereActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 finish();
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
 
             }
         });
@@ -145,7 +147,7 @@ public class AjoutMatiereActivity extends AppCompatActivity {
         AjoutMatiere am = new AjoutMatiere();
         am.execute();
 
-        finish();
+        //finish();
 
     }
 }

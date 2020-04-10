@@ -202,7 +202,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             protected void onPostExecute(List<Matiere> matieres) {
                 super.onPostExecute(matieres);
-                MatiereAdapter adapter = new MatiereAdapter(getApplicationContext(),matieres);
+                MatiereAdapter adapter = new MatiereAdapter(getApplicationContext(),matieres,button);
                 recyclerView.setAdapter(adapter);
 
                 Log.e("moyenne",moyG.toString());
@@ -228,6 +228,12 @@ public class MainActivity extends AppCompatActivity {
 
         LesMatieres lm = new LesMatieres();
         lm.execute();
+    }
+
+    // Dans le cas où on presse le bouton précédent
+    public void onRestart() {
+        super.onRestart();
+        lesMatieres();
     }
 
 }

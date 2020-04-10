@@ -73,11 +73,11 @@ public class AnneeActivity extends AppCompatActivity {
             }
         });
 
-        LesAnnes();
+        LesAnnees();
 
     }
 
-    private void LesAnnes(){
+    private void LesAnnees(){
 
         class LesAnnees extends AsyncTask<Void, Void, List<Annee>> {
 
@@ -191,5 +191,11 @@ public class AnneeActivity extends AppCompatActivity {
         AjoutAnnee am = new AjoutAnnee();
         am.execute();
 
+    }
+
+    // Dans le cas où on presse le bouton précédent
+    public void onRestart() {
+        super.onRestart();
+        LesAnnees();
     }
 }

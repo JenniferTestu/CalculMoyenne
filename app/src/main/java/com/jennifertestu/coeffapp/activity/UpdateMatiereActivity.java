@@ -159,6 +159,6 @@ public class UpdateMatiereActivity extends AppCompatActivity {
         UpdateMatiere um = new UpdateMatiere();
         um.execute();
 
-        finish();
+        //finish();
     }
 }

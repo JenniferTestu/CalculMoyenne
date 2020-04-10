@@ -3,6 +3,7 @@ package com.jennifertestu.coeffapp.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,6 +22,7 @@ import com.jennifertestu.coeffapp.activity.NotesActivity;
 import com.jennifertestu.coeffapp.R;
 import com.jennifertestu.coeffapp.activity.UpdateMatiereActivity;
 import com.jennifertestu.coeffapp.model.Matiere;
+import com.jennifertestu.coeffapp.model.Note;
 
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
@@ -33,11 +35,13 @@ public class MatiereAdapter extends RecyclerView.Adapter<MatiereAdapter.MatiereV
     private Context mCtx;
     private List<Matiere> matiereList;
     private DecimalFormat df = new DecimalFormat("#.##");
+    private Button button;
 
 
-    public MatiereAdapter(Context mCtx, List<Matiere> matiereList) {
+    public MatiereAdapter(Context mCtx, List<Matiere> matiereList, Button button) {
         this.mCtx = mCtx;
         this.matiereList = matiereList;
+        this.button=button;
     }
 
     @Override
@@ -185,6 +189,33 @@ public class MatiereAdapter extends RecyclerView.Adapter<MatiereAdapter.MatiereV
                 matiereList.remove(m);
                 notifyDataSetChanged();
                 Toast.makeText(mCtx, "Matière supprimée", Toast.LENGTH_LONG).show();
+
+
+                Double moyG = 0.0;
+                int coefs = 0;
+
+                for(Matiere m : matiereList) {
+                    if(!m.getListeNotes().isEmpty()) {
+                        moyG += m.calculerMoy() * m.getCoef();
+                        coefs += m.getCoef();
+                    }
+                }
+
+                moyG = moyG / coefs;
+
+                if(moyG >= 10 && moyG < 12){
+                    button.setText(df.format(moyG));
+                    button.setBackgroundResource(R.drawable.round_orange);
+                }else if (moyG >= 0 && moyG < 10){
+                    button.setText(df.format(moyG));
+                    button.setBackgroundResource(R.drawable.round_red);
+                }else if(moyG >= 12){
+                    button.setText(df.format(moyG));
+                    button.setBackgroundResource(R.drawable.round_blue);
+                }else {
+                    button.setText("/");
+                    button.setBackgroundResource(R.drawable.round_blue);
+                }
             }
         }
 

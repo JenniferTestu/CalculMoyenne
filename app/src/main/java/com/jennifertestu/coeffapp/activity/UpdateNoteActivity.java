@@ -202,7 +202,7 @@ public class UpdateNoteActivity extends AppCompatActivity {
         UpdateNote un = new UpdateNote();
         un.execute();
 
-        finish();
+        //finish();
 
     }
 

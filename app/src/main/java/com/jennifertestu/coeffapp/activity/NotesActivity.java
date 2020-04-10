@@ -108,19 +108,22 @@ public class NotesActivity extends AppCompatActivity {
 
             @Override
             protected List<Note> doInBackground(Void... voids) {
-                /*
+
                 List<Note> noteList = DatabaseClient
                         .getInstance(getApplicationContext())
                         .getAppDatabase()
                         .noteDAO()
                         .getAllByMatiere(matiere.getId());
-                */
 
-                List<Note> noteList = matiere.getListeNotes();
+
+                //List<Note> noteList = matiere.getListeNotes();
 
                 for(Note n : noteList) {
                     Log.i("Note de la liste",n.toString());
                 }
+
+                matiere.setListeNotes(noteList);
+                matiere.calculerMoy();
 
                 return noteList;
             }
@@ -130,7 +133,21 @@ public class NotesActivity extends AppCompatActivity {
                 super.onPostExecute(notes);
                 //final ListView notesListView = findViewById(R.id.list_notes_view);
                 //notesListView.setAdapter(new MatiereAdapter(getApplicationContext(), matieres));
-                NoteAdapter adapter = new NoteAdapter(getApplicationContext(),notes,matiere);
+                if(matiere.getMoy() >= 10 && matiere.getMoy() < 12){
+                    button.setText(df.format(matiere.getMoy()));
+                    button.setBackgroundResource(R.drawable.round_orange);
+                }else if (matiere.getMoy() >= 0 && matiere.getMoy() < 10){
+                    button.setText(df.format(matiere.getMoy()));
+                    button.setBackgroundResource(R.drawable.round_red);
+                }else if(matiere.getMoy() >= 12){
+                    button.setText(df.format(matiere.getMoy()));
+                    button.setBackgroundResource(R.drawable.round_blue);
+                }else {
+                    button.setText("/");
+                    button.setBackgroundResource(R.drawable.round_blue);
+                }
+
+                NoteAdapter adapter = new NoteAdapter(getApplicationContext(),notes,matiere,button);
                 recyclerView.setAdapter(adapter);
 
             }
@@ -140,5 +157,9 @@ public class NotesActivity extends AppCompatActivity {
         ln.execute();
     }
 
-
+    // Dans le cas où on presse le bouton précédent
+    public void onRestart() {
+        super.onRestart();
+        lesNotes();
+    }
 }
