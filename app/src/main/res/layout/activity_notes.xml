@@ -59,7 +59,7 @@
             android:layout_gravity="center"
             android:background="@drawable/round_blue"
             android:text="0.00"
-            android:textSize="70px"
+            android:textSize="65px"
             app:layout_constraintLeft_toRightOf="@+id/moy_text_view"
             app:layout_constraintWidth_percent="0.5"></Button>
 
