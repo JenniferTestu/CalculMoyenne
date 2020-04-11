@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SubMenu;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -130,6 +131,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                finish();
                 Intent activityAjoutMatiere = new Intent(getApplicationContext(), AjoutMatiereActivity.class);
                 startActivity(activityAjoutMatiere);
 

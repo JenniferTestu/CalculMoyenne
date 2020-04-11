@@ -149,6 +149,7 @@ public class AnneeAdapter extends RecyclerView.Adapter<AnneeAdapter.AnneeViewHol
             editor.apply();
 
             Intent intent = new Intent(mCtx, MainActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             mCtx.startActivity(intent);
         }
     }

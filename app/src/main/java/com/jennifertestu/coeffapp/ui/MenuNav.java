@@ -88,6 +88,7 @@ public class MenuNav {
 
                             // Rafraichir l'activité
                             Intent mainAnnee = new Intent(mCtx, MainActivity.class);
+                            mainAnnee.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             mCtx.startActivity(mainAnnee);
                             return true;
                         }
@@ -122,6 +123,8 @@ public class MenuNav {
             public boolean onMenuItemClick(MenuItem item) {
 
                 Intent activityAnnee = new Intent(mCtx.getApplicationContext(), AnneeActivity.class);
+                activityAnnee.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
                 mCtx.startActivity(activityAnnee);
 
                 return false;
@@ -140,6 +143,7 @@ public class MenuNav {
                 sendIntent.setType("text/plain");
 
                 Intent shareIntent = Intent.createChooser(sendIntent, null);
+                shareIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 mCtx.startActivity(shareIntent);
                 return false;
             }
@@ -155,6 +159,7 @@ public class MenuNav {
                     Intent viewIntent =
                             new Intent("android.intent.action.VIEW",
                                     Uri.parse(lien));
+                    viewIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     mCtx.startActivity(viewIntent);
                 }catch(Exception e) {
                     Toast.makeText(mCtx,"Impossible d'accèder à la page, essayez plus tard ...",
@@ -179,6 +184,7 @@ public class MenuNav {
             public boolean onMenuItemClick(MenuItem item) {
 
                 Intent activityBackup = new Intent(mCtx, BackupActivity.class);
+                activityBackup.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 mCtx.startActivity(activityBackup);
 
                 return false;

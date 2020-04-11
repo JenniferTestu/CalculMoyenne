@@ -93,7 +93,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
                                 Intent intent = new Intent(mCtx, UpdateNoteActivity.class);
                                 intent.putExtra("noteUpdate", noteList.get(position));
                                 intent.putExtra("matiere", matiere);
-
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                 mCtx.startActivity(intent);
                                 return true;
                             case R.id.menuPartage:
@@ -104,6 +104,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
                                 sendIntent.setType("text/plain");
 
                                 Intent shareIntent = Intent.createChooser(sendIntent, null);
+                                shareIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                 mCtx.startActivity(shareIntent);
                                 return true;
                             case R.id.menuSupp:

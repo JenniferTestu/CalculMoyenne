@@ -98,7 +98,7 @@ public class MatiereAdapter extends RecyclerView.Adapter<MatiereAdapter.MatiereV
                                 //Si le choix est d'éditer
                                 Intent intent = new Intent(mCtx, UpdateMatiereActivity.class);
                                 intent.putExtra("matiereUpdate", matiereList.get(position));
-
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                 mCtx.startActivity(intent);
                                 return true;
                             case R.id.menuPartage:
@@ -109,6 +109,7 @@ public class MatiereAdapter extends RecyclerView.Adapter<MatiereAdapter.MatiereV
                                 sendIntent.setType("text/plain");
 
                                 Intent shareIntent = Intent.createChooser(sendIntent, null);
+                                shareIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                 mCtx.startActivity(shareIntent);
                                 return true;
                             case R.id.menuSupp:
@@ -160,7 +161,7 @@ public class MatiereAdapter extends RecyclerView.Adapter<MatiereAdapter.MatiereV
 
             Intent intent = new Intent(mCtx, NotesActivity.class);
             intent.putExtra("matiere", matiere);
-
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             mCtx.startActivity(intent);
         }
     }

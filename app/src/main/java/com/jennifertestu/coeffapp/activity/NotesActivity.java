@@ -76,6 +76,7 @@ public class NotesActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                finish();
                 Intent activityAjoutNote = new Intent(getApplicationContext(), AjoutNoteActivity.class);
                 activityAjoutNote.putExtra("matiere",matiere);
                 startActivity(activityAjoutNote);
