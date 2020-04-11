@@ -112,26 +112,27 @@ public class BackupActivity extends AppCompatActivity {
             File data = Environment.getDataDirectory();
 
             if (sd.canWrite()) {
+
                 String  currentDBPath= "//data//" + "com.jennifertestu.coeffapp"
                         + "//databases//" + "CoefApp";
                 String backupDBPath  = Environment.DIRECTORY_DOWNLOADS+"/SauvegardeNotes.db";
+
                 File currentDB = new File(data, currentDBPath);
                 File backupDB = new File(sd, backupDBPath);
 
                 FileChannel src = new FileInputStream(currentDB).getChannel();
-                FileChannel dst = new FileOutputStream(backupDB).getChannel();
+                FileChannel dst = new FileOutputStream(backupDB).getChannel(); // Prob
+
                 dst.transferFrom(src, 0, src.size());
                 src.close();
                 dst.close();
                 Toast.makeText(getBaseContext(), backupDB.toString(),
                         Toast.LENGTH_LONG).show();
-                tv.setText("Export réussi !");
-
+                tv.setText("Export réussi ! \nRetrouvez le fichier 'SauvegardeNotes.db' dans le dossier 'Téléchargement'");
             }
         } catch (Exception e) {
 
-            Toast.makeText(getBaseContext(), e.toString(), Toast.LENGTH_LONG)
-                    .show();
+            tv.setText(e.toString());
 
         }
 
@@ -153,7 +154,7 @@ public class BackupActivity extends AppCompatActivity {
             }else if (sd.canWrite()) {
                 String  currentDBPath= "//data//" + "com.jennifertestu.coeffapp"
                         + "//databases//" + "CoefApp";
-                //String backupDBPath  = path;
+
                 File  backupDB= new File(data, currentDBPath);
                 File currentDB  = new File(path);
 
@@ -212,6 +213,9 @@ public class BackupActivity extends AppCompatActivity {
                 else if (isDownloadsDocument(uri)) {
 
                     final String id = DocumentsContract.getDocumentId(uri);
+                    if (id.startsWith("raw:")) { // Rajout
+                        return id.replaceFirst("raw:", "");
+                    }
                     final Uri contentUri = ContentUris.withAppendedId(
                             Uri.parse("content://downloads/public_downloads"), Long.valueOf(id));
 

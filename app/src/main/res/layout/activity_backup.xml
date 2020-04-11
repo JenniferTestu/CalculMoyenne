@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginVertical="60px"
-            android:text="Sauvegarde de données "
+            android:text="Sauvegarde des données "
             android:textSize="80px"
             android:fontFamily="@font/erasdust"></androidx.appcompat.widget.AppCompatTextView>
 
@@ -70,6 +70,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="100dp"
+            android:textAlignment="center"
             android:fontFamily="@font/erasdust"></TextView>
 
     </LinearLayout>
