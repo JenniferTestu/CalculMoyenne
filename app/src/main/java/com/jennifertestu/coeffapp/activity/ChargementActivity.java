@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.animation.ArgbEvaluator;
 import android.animation.ObjectAnimator;
-import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -12,9 +11,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.widget.TextView;
 
-import com.jennifertestu.coeffapp.DatabaseClient;
 import com.jennifertestu.coeffapp.R;
-import com.jennifertestu.coeffapp.model.Annee;
 
 public class ChargementActivity extends AppCompatActivity {
 

@@ -8,7 +8,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -56,29 +55,19 @@ public class UpdateMatiereActivity extends AppCompatActivity {
         ArrayAdapter<Integer> adapter = new ArrayAdapter<Integer>(this,
                 android.R.layout.simple_spinner_item, arraySpinner);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        s.setAdapter(adapter);/*
-        s.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                periodeSelect = position++;
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-
-        });
-*/
+        s.setAdapter(adapter);
 
         matiereUpdate = (Matiere) getIntent().getExtras().getSerializable("matiereUpdate");
 
+        // Bouton pour annuler l'edition et retourner à la liste
         Button boutonAnnuler = (Button)findViewById(R.id.bouton_annuler);
         boutonAnnuler.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 finish();
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
 
             }
         });
@@ -91,6 +80,7 @@ public class UpdateMatiereActivity extends AppCompatActivity {
         }
         s.setSelection(adapter.getPosition(matiereUpdate.getPeriode()));
 
+        // Bouton pour l'edition
         Button boutonValiderMaj = (Button) findViewById(R.id.bouton_val_ajouter);
         boutonValiderMaj.setText("Modifier");
         boutonValiderMaj.setOnClickListener(new View.OnClickListener() {
@@ -105,7 +95,7 @@ public class UpdateMatiereActivity extends AppCompatActivity {
 
     }
 
-
+    // Tache d'edition d'une matiere
     private void updateMatiere(){
         if (editNom.getText().toString().isEmpty()) {
             editNom.setError("Un nom pour désigner la matière est requis");
@@ -131,22 +121,22 @@ public class UpdateMatiereActivity extends AppCompatActivity {
 
         class UpdateMatiere extends AsyncTask<Void, Void, Void> {
 
+            //Edition dans la BDD de la matiere
             @Override
             protected Void doInBackground(Void... voids) {
 
-                //creating a task
                 matiereUpdate.setNom(sNom);
                 matiereUpdate.setPeriode(sPeriode);
                 matiereUpdate.setCoef(sCoef);
                 matiereUpdate.setMoyPond(sMoyPond);
 
-                //adding to database
                 DatabaseClient.getInstance(getApplicationContext()).getAppDatabase()
                         .matiereDAO()
                         .update(matiereUpdate);
                 return null;
             }
 
+            // Actualisation et message de confirmation
             @Override
             protected void onPostExecute(Void aVoid) {
                 super.onPostExecute(aVoid);
@@ -159,6 +149,5 @@ public class UpdateMatiereActivity extends AppCompatActivity {
         UpdateMatiere um = new UpdateMatiere();
         um.execute();
 
-        //finish();
     }
 }

@@ -3,7 +3,6 @@ package com.jennifertestu.coeffapp.activity;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
-import android.app.DialogFragment;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -23,7 +22,6 @@ import com.jennifertestu.coeffapp.model.Matiere;
 import com.jennifertestu.coeffapp.model.Note;
 import com.jennifertestu.coeffapp.model.TypeDeNote;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -55,6 +53,7 @@ public class AjoutNoteActivity extends AppCompatActivity {
 
         editType.setAdapter(new ArrayAdapter<TypeDeNote>(this, android.R.layout.simple_spinner_item, TypeDeNote.values()));
 
+        // Bouton pour annuler l'ajout et retourner à la liste
         Button boutonAnnuler = (Button)findViewById(R.id.bouton_annuler);
         boutonAnnuler.setOnClickListener( new View.OnClickListener() {
             @Override
@@ -72,6 +71,7 @@ public class AjoutNoteActivity extends AppCompatActivity {
             editPoids.setVisibility(View.INVISIBLE);
         }
 
+        // Bouton pour l'ajout
         Button boutonValiderAjouter = (Button)findViewById(R.id.bouton_val_ajouter);
         boutonValiderAjouter.setOnClickListener( new View.OnClickListener() {
             @Override
@@ -117,7 +117,7 @@ public class AjoutNoteActivity extends AppCompatActivity {
         });
     }
 
-
+    // Tache d'ajout d'une note
     private void ajouterNote(){
 
 
@@ -164,15 +164,14 @@ public class AjoutNoteActivity extends AppCompatActivity {
 
         class AjoutNote extends AsyncTask<Void, Void, Void> {
 
+            //Ajout dans la BDD de la note
             @Override
             protected Void doInBackground(Void... voids) {
 
-                //creating a task
                 Note note = new Note(sVal,sType,sDate,matiere.getId());
                 note.setCommentaire(sCom);
                 note.setPoids(sPoids);
 
-                //adding to database
                 DatabaseClient.getInstance(getApplicationContext()).getAppDatabase()
                         .noteDAO()
                         .insert(note);
@@ -181,6 +180,7 @@ public class AjoutNoteActivity extends AppCompatActivity {
                 return null;
             }
 
+            // Actualisation et message de confirmation
             @Override
             protected void onPostExecute(Void aVoid) {
                 super.onPostExecute(aVoid);
@@ -194,8 +194,6 @@ public class AjoutNoteActivity extends AppCompatActivity {
 
         AjoutNote an = new AjoutNote();
         an.execute();
-
-        //finish();
 
     }
 

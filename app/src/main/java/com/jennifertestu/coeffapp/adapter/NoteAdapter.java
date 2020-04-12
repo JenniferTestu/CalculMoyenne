@@ -17,7 +17,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.jennifertestu.coeffapp.DatabaseClient;
 import com.jennifertestu.coeffapp.R;
-import com.jennifertestu.coeffapp.activity.NotesActivity;
 import com.jennifertestu.coeffapp.activity.UpdateNoteActivity;
 import com.jennifertestu.coeffapp.model.Matiere;
 import com.jennifertestu.coeffapp.model.Note;
@@ -28,28 +27,33 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Locale;
 
+// Permet l'affichage d'une liste de notes avec ses infos
 public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder> {
 
+    private Activity activity;
     private Context mCtx;
     private List<Note> noteList;
     private Matiere matiere;
     private DecimalFormat df = new DecimalFormat("#.##");
     private Button button;
 
-    public NoteAdapter(Context mCtx, List<Note> noteList, Matiere matiere,Button button) {
+    public NoteAdapter(Activity activity, Context mCtx, List<Note> noteList, Matiere matiere, Button button) {
+        this.activity=activity;
         this.mCtx = mCtx;
         this.noteList = noteList;
         this.matiere=matiere;
         this.button=button;
     }
 
+    // Construction d'un ViewHolder qui contient les infos qui composent un élément de la liste.
+    // Ici le ViewHolder se base sur un xml
     @Override
     public NoteViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(mCtx).inflate(R.layout.adapter_note, null);
         return new NoteViewHolder(view);
     }
 
-    //Complete les champs pour chaque matiere
+    //Complete les champs pour chaque note
     @Override
     public void onBindViewHolder(final NoteViewHolder holder, final int position) {
 
@@ -75,11 +79,12 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
             holder.rond.setBackgroundResource(R.drawable.round_blue);
         }
 
+        // Création du bouton affichant les actions possibles sur cet élément
         holder.buttonViewOption.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                //Creation du menu pour une matiere
+                //Creation du menu pour une note
                 PopupMenu popup = new PopupMenu(holder.buttonViewOption.getContext(), view);
                 //Ajout du fichier XML contenant le menu
                 popup.inflate(R.menu.options_menu);
@@ -90,6 +95,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
                         switch (item.getItemId()) {
                             case R.id.menuEdit:
                                 //Si le choix est d'éditer
+                                activity.finish();
                                 Intent intent = new Intent(mCtx, UpdateNoteActivity.class);
                                 intent.putExtra("noteUpdate", noteList.get(position));
                                 intent.putExtra("matiere", matiere);
@@ -126,7 +132,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
 
     }
 
-    //Comptage du nombre total de matière
+    //Comptage du nombre total de note
     @Override
     public int getItemCount() {
         if(noteList!=null) {
@@ -155,6 +161,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
             itemView.setOnClickListener(this);
         }
 
+        // Action à réaliser si on clique sur un élément
         @Override
         public void onClick(View view) {
             Note note = noteList.get(getAdapterPosition());
@@ -162,11 +169,13 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
         }
     }
 
+    // Tache de suppression d'une note
     private void SuppNote(final Note n){
 
 
         class SuppNote extends AsyncTask<Void, Void, Void> {
 
+            //Supression dans la BDD de la note
             @Override
             protected Void doInBackground(Void... voids) {
 
@@ -177,6 +186,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
                 return null;
             }
 
+            // Actualisation de l'adapter et message de confirmation
             @Override
             protected void onPostExecute(Void aVoid) {
                 super.onPostExecute(aVoid);

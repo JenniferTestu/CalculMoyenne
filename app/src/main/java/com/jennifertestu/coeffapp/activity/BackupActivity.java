@@ -11,16 +11,12 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.SubMenu;
+
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -38,7 +34,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.nio.channels.FileChannel;
-import java.util.List;
 
 public class BackupActivity extends AppCompatActivity {
     private static final int ACTIVITY_CHOOSE_FILE = 1;
@@ -80,13 +75,6 @@ public class BackupActivity extends AppCompatActivity {
             }
         });
 
-        // Récupération de l'année active dans les préférences
-        SharedPreferences prefs = getSharedPreferences("annee_active", MODE_PRIVATE);
-        int id = prefs.getInt("id", 0);//"No name defined" is the default value.
-        String nom = prefs.getString("nom", "Pas de nom"); //0 is the default value.
-        int nbperiode = prefs.getInt("nbperiode", 0);//"No name defined" is the default value.
-        anneeActive = new Annee(nom,nbperiode);
-        anneeActive.setId(id);
 
         NavigationView navView = (NavigationView) findViewById(R.id.nav_view);
         menuNav = new MenuNav(getApplicationContext(),navView);

@@ -3,7 +3,6 @@ package com.jennifertestu.coeffapp.activity;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
-import android.app.DialogFragment;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -23,7 +22,6 @@ import com.jennifertestu.coeffapp.model.Matiere;
 import com.jennifertestu.coeffapp.model.Note;
 import com.jennifertestu.coeffapp.model.TypeDeNote;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -60,13 +58,15 @@ public class UpdateNoteActivity extends AppCompatActivity {
 
         noteUpdate = (Note) getIntent().getExtras().getSerializable("noteUpdate");
 
+        // Bouton pour annuler l'edition et retourner à la liste
         Button boutonAnnuler = (Button)findViewById(R.id.bouton_annuler);
         boutonAnnuler.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 finish();
-
+                Intent intent = new Intent(getApplicationContext(), NotesActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -80,6 +80,7 @@ public class UpdateNoteActivity extends AppCompatActivity {
         editCom.setText(noteUpdate.getCommentaire());
         editPoids.setText(Integer.toString(noteUpdate.getPoids()));
 
+        // Bouton pour l'edition
         Button boutonValiderMaj = (Button)findViewById(R.id.bouton_val_ajouter);
         boutonValiderMaj.setText("Modifier");
         boutonValiderMaj.setOnClickListener( new View.OnClickListener() {
@@ -129,9 +130,8 @@ public class UpdateNoteActivity extends AppCompatActivity {
 
     }
 
-
+    // Tache d'edition d'une note
     private void updateNote(){
-
 
         if (editNote.getText().toString().isEmpty()) {
             editNote.setError("Une valeur pour la note est requise");
@@ -167,20 +167,17 @@ public class UpdateNoteActivity extends AppCompatActivity {
         }
 
 
-
-
         class UpdateNote extends AsyncTask<Void, Void, Void> {
 
+            //Edition dans la BDD de la note
             @Override
             protected Void doInBackground(Void... voids) {
 
-                //creating a task
                 noteUpdate.setValeur(sVal);
                 noteUpdate.setTypeDeNote(sType);
                 noteUpdate.setCommentaire(sCom);
                 noteUpdate.setPoids(sPoids);
 
-                //adding to database
                 DatabaseClient.getInstance(getApplicationContext()).getAppDatabase()
                         .noteDAO()
                         .update(noteUpdate);
@@ -188,6 +185,7 @@ public class UpdateNoteActivity extends AppCompatActivity {
                 return null;
             }
 
+            // Actualisation et message de confirmation
             @Override
             protected void onPostExecute(Void aVoid) {
                 super.onPostExecute(aVoid);
@@ -201,8 +199,6 @@ public class UpdateNoteActivity extends AppCompatActivity {
 
         UpdateNote un = new UpdateNote();
         un.execute();
-
-        //finish();
 
     }
 

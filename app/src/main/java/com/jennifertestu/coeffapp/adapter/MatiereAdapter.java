@@ -1,9 +1,9 @@
 package com.jennifertestu.coeffapp.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,12 +17,10 @@ import android.widget.Toast;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.jennifertestu.coeffapp.DatabaseClient;
-import com.jennifertestu.coeffapp.activity.AjoutMatiereActivity;
 import com.jennifertestu.coeffapp.activity.NotesActivity;
 import com.jennifertestu.coeffapp.R;
 import com.jennifertestu.coeffapp.activity.UpdateMatiereActivity;
 import com.jennifertestu.coeffapp.model.Matiere;
-import com.jennifertestu.coeffapp.model.Note;
 
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
@@ -30,20 +28,25 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Locale;
 
+// Permet l'affichage d'une liste de matieres avec ses infos
 public class MatiereAdapter extends RecyclerView.Adapter<MatiereAdapter.MatiereViewHolder> {
 
+    private Activity activity;
     private Context mCtx;
     private List<Matiere> matiereList;
     private DecimalFormat df = new DecimalFormat("#.##");
     private Button button;
 
 
-    public MatiereAdapter(Context mCtx, List<Matiere> matiereList, Button button) {
+    public MatiereAdapter(Activity activity, Context mCtx, List<Matiere> matiereList, Button button) {
+        this.activity=activity;
         this.mCtx = mCtx;
         this.matiereList = matiereList;
         this.button=button;
     }
 
+    // Construction d'un ViewHolder qui contient les infos qui composent un élément de la liste.
+    // Ici le ViewHolder se base sur un xml
     @Override
     public MatiereViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(mCtx).inflate(R.layout.adapter_item, null);
@@ -81,6 +84,7 @@ public class MatiereAdapter extends RecyclerView.Adapter<MatiereAdapter.MatiereV
             holder.rond.setBackgroundResource(R.drawable.round_blue);
         }
 
+        // Création du bouton affichant les actions possibles sur cet élément
         holder.buttonViewOption.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -96,6 +100,7 @@ public class MatiereAdapter extends RecyclerView.Adapter<MatiereAdapter.MatiereV
                         switch (item.getItemId()) {
                             case R.id.menuEdit:
                                 //Si le choix est d'éditer
+                                activity.finish();
                                 Intent intent = new Intent(mCtx, UpdateMatiereActivity.class);
                                 intent.putExtra("matiereUpdate", matiereList.get(position));
                                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -155,6 +160,7 @@ public class MatiereAdapter extends RecyclerView.Adapter<MatiereAdapter.MatiereV
             itemView.setOnClickListener(this);
         }
 
+        // Action à réaliser si on clique sur un élément
         @Override
         public void onClick(View view) {
             Matiere matiere = matiereList.get(getAdapterPosition());
@@ -166,15 +172,16 @@ public class MatiereAdapter extends RecyclerView.Adapter<MatiereAdapter.MatiereV
         }
     }
 
+    // Tache de suppression d'une matiere
     private void SuppMatiere(final Matiere m){
 
 
         class SuppMatiere extends AsyncTask<Void, Void, Void> {
 
+            //Supression dans la BDD de la matiere ainsi que ses notes
             @Override
             protected Void doInBackground(Void... voids) {
 
-                //adding to database
                 DatabaseClient.getInstance(mCtx).getAppDatabase()
                         .matiereDAO()
                         .delete(m);
@@ -184,6 +191,7 @@ public class MatiereAdapter extends RecyclerView.Adapter<MatiereAdapter.MatiereV
                 return null;
             }
 
+            // Actualisation de l'adapter et message de confirmation
             @Override
             protected void onPostExecute(Void aVoid) {
                 super.onPostExecute(aVoid);

@@ -21,6 +21,7 @@ import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.List;
 
+
 public class NotesActivity extends AppCompatActivity {
 
     private TextView textMoy;
@@ -148,7 +149,7 @@ public class NotesActivity extends AppCompatActivity {
                     button.setBackgroundResource(R.drawable.round_blue);
                 }
 
-                NoteAdapter adapter = new NoteAdapter(getApplicationContext(),notes,matiere,button);
+                NoteAdapter adapter = new NoteAdapter(NotesActivity.this,getApplicationContext(),notes,matiere,button);
                 recyclerView.setAdapter(adapter);
 
             }

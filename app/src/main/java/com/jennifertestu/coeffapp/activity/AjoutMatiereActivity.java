@@ -8,7 +8,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -57,20 +56,9 @@ public class AjoutMatiereActivity extends AppCompatActivity {
         ArrayAdapter<Integer> adapter = new ArrayAdapter<Integer>(this,
                 android.R.layout.simple_spinner_item, arraySpinner);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        s.setAdapter(adapter);/*
-        s.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                periodeSelect = position++;
-            }
+        s.setAdapter(adapter);
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-
-        });
-*/
+        // Bouton pour annuler l'ajout et retourner à la liste
         Button boutonAnnuler = (Button)findViewById(R.id.bouton_annuler);
         boutonAnnuler.setOnClickListener( new View.OnClickListener() {
             @Override
@@ -83,7 +71,7 @@ public class AjoutMatiereActivity extends AppCompatActivity {
             }
         });
 
-
+        // Bouton pour l'ajout
         Button boutonValiderAjouter = (Button) findViewById(R.id.bouton_val_ajouter);
         boutonValiderAjouter.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -96,6 +84,7 @@ public class AjoutMatiereActivity extends AppCompatActivity {
 
     }
 
+    // Tache d'ajout d'une matiere
     private void ajouterMatiere(){
 
         if (editNom.getText().toString().isEmpty()) {
@@ -122,19 +111,19 @@ public class AjoutMatiereActivity extends AppCompatActivity {
 
         class AjoutMatiere extends AsyncTask<Void, Void, Void> {
 
+            //Ajout dans la BDD de la matiere
             @Override
             protected Void doInBackground(Void... voids) {
 
-                //creating a task
                 Matiere matiere = new Matiere(idAnnee,sPeriode,sNom,sCoef,sMoyPond);
 
-                //adding to database
                 DatabaseClient.getInstance(getApplicationContext()).getAppDatabase()
                         .matiereDAO()
                         .insert(matiere);
                 return null;
             }
 
+            // Actualisation et message de confirmation
             @Override
             protected void onPostExecute(Void aVoid) {
                 super.onPostExecute(aVoid);
@@ -147,7 +136,6 @@ public class AjoutMatiereActivity extends AppCompatActivity {
         AjoutMatiere am = new AjoutMatiere();
         am.execute();
 
-        //finish();
 
     }
 }

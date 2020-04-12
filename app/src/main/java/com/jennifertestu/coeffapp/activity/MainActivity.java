@@ -5,20 +5,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.SubMenu;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 import com.jennifertestu.coeffapp.DatabaseClient;
@@ -59,26 +53,6 @@ public class MainActivity extends AppCompatActivity {
         // Emplacement de la moyenne générale
         button = findViewById(R.id.button);
 
-
-
-/*
-        Annee a1 = new Annee("Terminal",3);
-        a1.setActif(false);
-        Annee a2 = new Annee("L1",2);
-        a2.setActif(false);
-
-        DatabaseClient
-                .getInstance(getApplicationContext())
-                .getAppDatabase()
-                .anneeDAO()
-                .insert(a1);
-
-        DatabaseClient
-                .getInstance(getApplicationContext())
-                .getAppDatabase()
-                .anneeDAO()
-                .insert(a2);
-*/
 
         // Récupération de l'année active dans les préférences
         SharedPreferences prefs = getSharedPreferences("annee_active", MODE_PRIVATE);
@@ -204,7 +178,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             protected void onPostExecute(List<Matiere> matieres) {
                 super.onPostExecute(matieres);
-                MatiereAdapter adapter = new MatiereAdapter(getApplicationContext(),matieres,button);
+                MatiereAdapter adapter = new MatiereAdapter(MainActivity.this,getApplicationContext(),matieres,button);
                 recyclerView.setAdapter(adapter);
 
                 Log.e("moyenne",moyG.toString());

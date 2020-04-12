@@ -5,7 +5,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.AsyncTask;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -26,15 +25,13 @@ import com.jennifertestu.coeffapp.activity.MainActivity;
 import com.jennifertestu.coeffapp.model.Annee;
 import com.jennifertestu.coeffapp.model.Matiere;
 
-import java.math.RoundingMode;
-import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.Locale;
 
 import static android.content.Context.MODE_PRIVATE;
 
+// Permet l'affichage d'une liste d'années avec ses infos
 public class AnneeAdapter extends RecyclerView.Adapter<AnneeAdapter.AnneeViewHolder> {
+
     private Activity activity;
     private Context mCtx;
     private List<Annee> anneeList;
@@ -55,13 +52,15 @@ public class AnneeAdapter extends RecyclerView.Adapter<AnneeAdapter.AnneeViewHol
         anneeActive.setId(id);
     }
 
+    // Construction d'un ViewHolder qui contient les infos qui composent un élément de la liste.
+    // Ici le ViewHolder se base sur un xml
     @Override
     public AnneeAdapter.AnneeViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(mCtx).inflate(R.layout.adapter_annee, null);
         return new AnneeAdapter.AnneeViewHolder(view);
     }
 
-    //Complete les champs pour chaque matiere
+    //Complete les champs pour chaque année
     @Override
     public void onBindViewHolder(final AnneeAdapter.AnneeViewHolder holder, final int position) {
 
@@ -75,11 +74,12 @@ public class AnneeAdapter extends RecyclerView.Adapter<AnneeAdapter.AnneeViewHol
             holder.rond.setBackgroundResource(R.drawable.ic_date_range_white);
         }
 
+        // Création du bouton affichant les actions possibles sur cet élément
         holder.buttonViewOption.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                //Creation du menu pour une matiere
+                //Creation du menu pour une année
                 PopupMenu popup = new PopupMenu(holder.buttonViewOption.getContext(), view);
                 //Ajout du fichier XML contenant le menu
                 popup.inflate(R.menu.options_menu_2);
@@ -115,7 +115,7 @@ public class AnneeAdapter extends RecyclerView.Adapter<AnneeAdapter.AnneeViewHol
 
     }
 
-    //Comptage du nombre total de matière
+    //Comptage du nombre total d'année
     @Override
     public int getItemCount() {
         return anneeList.size();
@@ -138,6 +138,7 @@ public class AnneeAdapter extends RecyclerView.Adapter<AnneeAdapter.AnneeViewHol
             itemView.setOnClickListener(this);
         }
 
+        // Action à réaliser si on clique sur un élément
         @Override
         public void onClick(View view) {
             Annee annee = anneeList.get(getAdapterPosition());
@@ -154,14 +155,15 @@ public class AnneeAdapter extends RecyclerView.Adapter<AnneeAdapter.AnneeViewHol
         }
     }
 
+    // Tache de suppression d'une année
     private void SuppAnnee(final Annee a){
 
         class SuppAnnee extends AsyncTask<Void, Void, Void> {
 
+            //Supression dans la BDD de l'année ainsi que ses matières et ses notes
             @Override
             protected Void doInBackground(Void... voids) {
 
-                //adding to database
                 DatabaseClient.getInstance(mCtx).getAppDatabase()
                         .anneeDAO()
                         .delete(a);
@@ -182,6 +184,7 @@ public class AnneeAdapter extends RecyclerView.Adapter<AnneeAdapter.AnneeViewHol
                 return null;
             }
 
+            // Actualisation de l'adapter et message de confirmation
             @Override
             protected void onPostExecute(Void aVoid) {
                 super.onPostExecute(aVoid);
@@ -197,7 +200,7 @@ public class AnneeAdapter extends RecyclerView.Adapter<AnneeAdapter.AnneeViewHol
 
     }
 
-
+    // Tache d'edition d'une année
     private void updaterAnnee(final Annee a){
 
         if (editNom.getText().toString().isEmpty()) {
@@ -209,20 +212,20 @@ public class AnneeAdapter extends RecyclerView.Adapter<AnneeAdapter.AnneeViewHol
 
         final String sNom = editNom.getText().toString().trim();
 
+        //Edition dans la BDD de l'année
         class UpdateAnnee extends AsyncTask<Void, Void, Void> {
 
             @Override
             protected Void doInBackground(Void... voids) {
 
-                //creating a task
                 a.setNom(sNom);
-                //adding to database
                 DatabaseClient.getInstance(mCtx).getAppDatabase()
                         .anneeDAO()
                         .update(a);
                 return null;
             }
 
+            // Actualisation de l'adapter et message de confirmation
             @Override
             protected void onPostExecute(Void aVoid) {
                 super.onPostExecute(aVoid);
@@ -238,6 +241,7 @@ public class AnneeAdapter extends RecyclerView.Adapter<AnneeAdapter.AnneeViewHol
 
     }
 
+    // Popup pour actualiser les infos d'une année
     private void popupUpdate(final Annee a, Activity activity){
 
         final AlertDialog dialogBuilder = new AlertDialog.Builder(activity).create();

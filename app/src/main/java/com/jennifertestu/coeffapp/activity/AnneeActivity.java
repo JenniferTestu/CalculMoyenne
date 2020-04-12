@@ -6,13 +6,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.SubMenu;
+
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,7 +19,6 @@ import com.google.android.material.navigation.NavigationView;
 import com.jennifertestu.coeffapp.DatabaseClient;
 import com.jennifertestu.coeffapp.R;
 import com.jennifertestu.coeffapp.adapter.AnneeAdapter;
-import com.jennifertestu.coeffapp.adapter.MatiereAdapter;
 import com.jennifertestu.coeffapp.model.Annee;
 import com.jennifertestu.coeffapp.ui.MenuNav;
 
