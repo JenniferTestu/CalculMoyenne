@@ -36,13 +36,17 @@ public class MatiereAdapter extends RecyclerView.Adapter<MatiereAdapter.MatiereV
     private List<Matiere> matiereList;
     private DecimalFormat df = new DecimalFormat("#.##");
     private Button button;
-
+    private Boolean toutesPeriodes=false;
 
     public MatiereAdapter(Activity activity, Context mCtx, List<Matiere> matiereList, Button button) {
         this.activity=activity;
         this.mCtx = mCtx;
         this.matiereList = matiereList;
         this.button=button;
+    }
+
+    public void setToutesPeriodes(Boolean toutesPeriodes) {
+        this.toutesPeriodes = toutesPeriodes;
     }
 
     // Construction d'un ViewHolder qui contient les infos qui composent un élément de la liste.
@@ -60,7 +64,13 @@ public class MatiereAdapter extends RecyclerView.Adapter<MatiereAdapter.MatiereV
         df.setRoundingMode(RoundingMode.DOWN);
 
         Matiere m = matiereList.get(position);
-        holder.nomView.setText(m.getNom());
+
+        if(toutesPeriodes==true) {
+            holder.nomView.setText(m.getNom()+" (Période "+m.getPeriode()+")");
+        }else{
+            holder.nomView.setText(m.getNom());
+        }
+
         holder.coefView.setText("Coefficient : "+Integer.toString(m.getCoef()));
         if(m.getDateDerniereNote()!=null) {
             SimpleDateFormat formater = new SimpleDateFormat("d MMMM yyyy", Locale.FRANCE);

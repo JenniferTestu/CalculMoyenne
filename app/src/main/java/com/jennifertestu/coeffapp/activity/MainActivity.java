@@ -179,6 +179,13 @@ public class MainActivity extends AppCompatActivity {
             protected void onPostExecute(List<Matiere> matieres) {
                 super.onPostExecute(matieres);
                 MatiereAdapter adapter = new MatiereAdapter(MainActivity.this,getApplicationContext(),matieres,button);
+
+                if(periodeSelect==0){
+                    adapter.setToutesPeriodes(true);
+                }else{
+                    adapter.setToutesPeriodes(false);
+                }
+
                 recyclerView.setAdapter(adapter);
 
                 Log.e("moyenne",moyG.toString());
