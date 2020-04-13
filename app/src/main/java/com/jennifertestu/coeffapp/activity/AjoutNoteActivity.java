@@ -197,5 +197,8 @@ public class AjoutNoteActivity extends AppCompatActivity {
 
     }
 
-
+    // Si le bouton précédent est cliqué
+    public void onBackPressed() {
+        startActivity(new Intent(getApplicationContext(), NotesActivity.class));
+    }
 }

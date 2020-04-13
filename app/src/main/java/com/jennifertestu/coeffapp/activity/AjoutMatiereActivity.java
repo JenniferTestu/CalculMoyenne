@@ -138,4 +138,9 @@ public class AjoutMatiereActivity extends AppCompatActivity {
 
 
     }
+
+    // Si le bouton précédent est cliqué
+    public void onBackPressed() {
+        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+    }
 }

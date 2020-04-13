@@ -150,4 +150,9 @@ public class UpdateMatiereActivity extends AppCompatActivity {
         um.execute();
 
     }
+
+    // Si le bouton précédent est cliqué
+    public void onBackPressed() {
+        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+    }
 }
