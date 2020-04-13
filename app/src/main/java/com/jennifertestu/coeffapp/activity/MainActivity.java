@@ -1,13 +1,17 @@
 package com.jennifertestu.coeffapp.activity;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.PopupMenu;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -24,6 +28,8 @@ import com.jennifertestu.coeffapp.ui.MenuNav;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -37,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
     private Annee anneeActive;
     private int periodeSelect;
     private MenuNav menuNav;
-
+    private MatiereAdapter adapter;
 
     // A la création de l'activité
     @Override
@@ -128,6 +134,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
     }
 
     private void lesMatieres() {
@@ -175,10 +182,14 @@ public class MainActivity extends AppCompatActivity {
                 return matiereList;
             }
 
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             protected void onPostExecute(List<Matiere> matieres) {
                 super.onPostExecute(matieres);
-                MatiereAdapter adapter = new MatiereAdapter(MainActivity.this,getApplicationContext(),matieres,button);
+
+                optionTri(recyclerView,matieres);
+
+                adapter = new MatiereAdapter(MainActivity.this,getApplicationContext(),matieres,button);
 
                 if(periodeSelect==0){
                     adapter.setToutesPeriodes(true);
@@ -217,6 +228,91 @@ public class MainActivity extends AppCompatActivity {
     public void onRestart() {
         super.onRestart();
         lesMatieres();
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public void optionTri(final RecyclerView recyclerView, final List<Matiere> liste) {
+
+        Button button_tri = findViewById(R.id.bouton_tri);
+        button_tri.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                //Creation du menu pour une matiere
+                PopupMenu popup = new PopupMenu(button.getContext(), view);
+                //Ajout du fichier XML contenant le menu
+                popup.inflate(R.menu.option_tri);
+                //Ajout de l'écoute du clique
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        switch (item.getItemId()) {
+                            case R.id.tri_notes_croissants:
+                                Collections.sort(liste, new Comparator<Matiere>() {
+                                    @Override
+                                    public int compare(Matiere o1, Matiere o2) {
+                                        return Double.compare(o1.getMoy(),o2.getMoy());
+                                    }
+                                });
+                                recyclerView.getAdapter().notifyDataSetChanged();
+                                return true;
+                            case R.id.tri_notes_decroissants:
+                                Collections.sort(liste, new Comparator<Matiere>() {
+                                    @Override
+                                    public int compare(Matiere o1, Matiere o2) {
+                                        return Double.compare(o1.getMoy(),o2.getMoy());
+                                    }
+                                });
+                                Collections.reverse(liste);
+                                recyclerView.getAdapter().notifyDataSetChanged();
+                                return true;
+                            case R.id.tri_coefs_croissants:
+                                Collections.sort(liste, new Comparator<Matiere>() {
+                                    @Override
+                                    public int compare(Matiere o1, Matiere o2) {
+                                        return Double.compare(o1.getCoef(),o2.getCoef());
+                                    }
+                                });
+                                recyclerView.getAdapter().notifyDataSetChanged();
+                                return true;
+                            case R.id.tri_coefs_decroissants:
+                                Collections.sort(liste, new Comparator<Matiere>() {
+                                    @Override
+                                    public int compare(Matiere o1, Matiere o2) {
+                                        return Double.compare(o1.getCoef(),o2.getCoef());
+                                    }
+                                });
+                                Collections.reverse(liste);
+                                recyclerView.getAdapter().notifyDataSetChanged();
+                                return true;
+                            case R.id.tri_ancien_recent:
+                                Collections.sort(liste);
+                                recyclerView.getAdapter().notifyDataSetChanged();
+                                return true;
+                            case R.id.tri_recent_ancien:
+                                Collections.sort(liste);
+                                Collections.reverse(liste);
+                                recyclerView.getAdapter().notifyDataSetChanged();
+                                return true;
+                            case R.id.tri_alph:
+                                Collections.sort(liste, new Comparator<Matiere>() {
+                                    @Override
+                                    public int compare(Matiere o1, Matiere o2) {
+                                        return o1.getNom().compareToIgnoreCase(o2.getNom());
+                                    }
+                                });
+                                recyclerView.getAdapter().notifyDataSetChanged();
+                                return true;
+                            default:
+                                return false;
+                        }
+                    }
+                });
+                //Affichage du menu
+                popup.show();
+
+            }
+        });
     }
 
 }

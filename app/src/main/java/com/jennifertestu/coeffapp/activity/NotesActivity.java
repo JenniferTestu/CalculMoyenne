@@ -1,12 +1,16 @@
 package com.jennifertestu.coeffapp.activity;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.PopupMenu;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -19,6 +23,8 @@ import com.jennifertestu.coeffapp.model.Note;
 
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 
@@ -30,6 +36,7 @@ public class NotesActivity extends AppCompatActivity {
     private Button button;
     private Matiere matiere;
     private List<Note> notes;
+    private NoteAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -130,11 +137,13 @@ public class NotesActivity extends AppCompatActivity {
                 return noteList;
             }
 
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             protected void onPostExecute(List<Note> notes) {
                 super.onPostExecute(notes);
                 //final ListView notesListView = findViewById(R.id.list_notes_view);
                 //notesListView.setAdapter(new MatiereAdapter(getApplicationContext(), matieres));
+
                 if(matiere.getMoy() >= 10 && matiere.getMoy() < 12){
                     button.setText(df.format(matiere.getMoy()));
                     button.setBackgroundResource(R.drawable.round_orange);
@@ -149,7 +158,9 @@ public class NotesActivity extends AppCompatActivity {
                     button.setBackgroundResource(R.drawable.round_blue);
                 }
 
-                NoteAdapter adapter = new NoteAdapter(NotesActivity.this,getApplicationContext(),notes,matiere,button);
+                optionTri(recyclerView,notes);
+
+                adapter = new NoteAdapter(NotesActivity.this,getApplicationContext(),notes,matiere,button);
                 recyclerView.setAdapter(adapter);
 
             }
@@ -163,5 +174,82 @@ public class NotesActivity extends AppCompatActivity {
     public void onRestart() {
         super.onRestart();
         lesNotes();
+    }
+
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public void optionTri(final RecyclerView recyclerView, final List<Note> liste) {
+
+        Button button_tri = findViewById(R.id.bouton_tri);
+        button_tri.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                //Creation du menu pour une matiere
+                PopupMenu popup = new PopupMenu(button.getContext(), view);
+                //Ajout du fichier XML contenant le menu
+                popup.inflate(R.menu.option_tri_2);
+                //Ajout de l'écoute du clique
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        switch (item.getItemId()) {
+                            case R.id.tri_notes_croissants:
+                                Collections.sort(liste, new Comparator<Note>() {
+                                    @Override
+                                    public int compare(Note o1, Note o2) {
+                                        return Double.compare(o1.getValeur(),o2.getValeur());
+                                    }
+                                });
+                                recyclerView.getAdapter().notifyDataSetChanged();
+                                return true;
+                            case R.id.tri_notes_decroissants:
+                                Collections.sort(liste, new Comparator<Note>() {
+                                    @Override
+                                    public int compare(Note o1, Note o2) {
+                                        return Double.compare(o1.getValeur(),o2.getValeur());
+                                    }
+                                });
+                                Collections.reverse(liste);
+                                recyclerView.getAdapter().notifyDataSetChanged();
+                                return true;
+                            case R.id.tri_coefs_croissants:
+                                Collections.sort(liste, new Comparator<Note>() {
+                                    @Override
+                                    public int compare(Note o1, Note o2) {
+                                        return Double.compare(o1.getPoids(),o2.getPoids());
+                                    }
+                                });
+                                recyclerView.getAdapter().notifyDataSetChanged();
+                                return true;
+                            case R.id.tri_coefs_decroissants:
+                                Collections.sort(liste, new Comparator<Note>() {
+                                    @Override
+                                    public int compare(Note o1, Note o2) {
+                                        return Double.compare(o1.getPoids(),o2.getPoids());
+                                    }
+                                });
+                                Collections.reverse(liste);
+                                recyclerView.getAdapter().notifyDataSetChanged();
+                                return true;
+                            case R.id.tri_ancien_recent:
+                                Collections.sort(liste);
+                                recyclerView.getAdapter().notifyDataSetChanged();
+                                return true;
+                            case R.id.tri_recent_ancien:
+                                Collections.sort(liste);
+                                Collections.reverse(liste);
+                                recyclerView.getAdapter().notifyDataSetChanged();
+                                return true;
+                            default:
+                                return false;
+                        }
+                    }
+                });
+                //Affichage du menu
+                popup.show();
+
+            }
+        });
     }
 }

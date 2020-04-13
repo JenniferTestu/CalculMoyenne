@@ -11,7 +11,7 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-public class Matiere implements Serializable {
+public class Matiere implements Comparable<Matiere>,Serializable {
 
     // Identifiant de la matiere
     @PrimaryKey(autoGenerate = true)
@@ -153,4 +153,13 @@ public class Matiere implements Serializable {
             }
         }
     }
+
+    @Override
+    public int compareTo(Matiere m) {
+        if (getDateDerniereNote() == null || m.getDateDerniereNote() == null) {
+            return 0;
+        }
+        return getDateDerniereNote().compareTo(m.getDateDerniereNote());
+    }
+
 }

@@ -82,8 +82,17 @@
             android:layout_height="20dp"
             android:background="@drawable/ic_share"
             android:layout_gravity="center"
-            android:layout_marginLeft="20dp"
+            android:layout_marginLeft="15dp"
             app:layout_constraintLeft_toRightOf="@+id/button"></Button>
+
+        <Button
+            android:id="@+id/bouton_tri"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="@drawable/ic_sort_24dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="15dp"
+            app:layout_constraintLeft_toRightOf="@+id/bouton_share_moy"></Button>
 
     </LinearLayout>
 
