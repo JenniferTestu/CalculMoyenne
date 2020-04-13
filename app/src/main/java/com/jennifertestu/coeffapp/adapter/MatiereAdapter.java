@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.PopupMenu;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.jennifertestu.coeffapp.DatabaseClient;
@@ -130,7 +131,7 @@ public class MatiereAdapter extends RecyclerView.Adapter<MatiereAdapter.MatiereV
                             case R.id.menuSupp:
                                 //Si le choix est de supprimer
                                 Matiere selectMatiere = matiereList.get(position);
-                                SuppMatiere(selectMatiere);
+                                popupSupp(selectMatiere,activity);
                                 return true;
                             default:
                                 return false;
@@ -241,6 +242,39 @@ public class MatiereAdapter extends RecyclerView.Adapter<MatiereAdapter.MatiereV
         SuppMatiere sm = new SuppMatiere();
         sm.execute();
 
+    }
+
+
+    // Popup pour demander confirmation avant suppression
+    private void popupSupp(final Matiere m, Activity activity){
+
+        final AlertDialog dialogBuilder = new AlertDialog.Builder(activity).create();
+        LayoutInflater inflater = LayoutInflater.from(activity);
+        View dialogView = inflater.inflate(R.layout.confirmation_dialog, null);
+
+        TextView tv = (TextView) dialogView.findViewById(R.id.textView);
+        tv.setText("Etes-vous sûrs de vouloir surpprimer la matière "+m.getNom()+" ?");
+
+        Button buttonConfirm = (Button) dialogView.findViewById(R.id.buttonSubmit);
+        Button buttonAnnule = (Button) dialogView.findViewById(R.id.buttonCancel);
+
+        buttonAnnule.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialogBuilder.dismiss();
+            }
+        });
+        buttonConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                SuppMatiere(m);
+                dialogBuilder.dismiss();
+            }
+        });
+
+        dialogBuilder.setView(dialogView);
+        dialogBuilder.show();
 
     }
 }

@@ -25,6 +25,8 @@ import com.jennifertestu.coeffapp.activity.MainActivity;
 import com.jennifertestu.coeffapp.model.Annee;
 import com.jennifertestu.coeffapp.model.Matiere;
 
+import org.w3c.dom.Text;
+
 import java.util.List;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -98,7 +100,7 @@ public class AnneeAdapter extends RecyclerView.Adapter<AnneeAdapter.AnneeViewHol
                                 if (selectAnnee.getId() == anneeActive.getId()){
                                     Toast.makeText(mCtx, "Vous ne pouvez pas supprimer l'année en cours", Toast.LENGTH_LONG).show();
                                 }else{
-                                    SuppAnnee(selectAnnee);
+                                    popupSupp(selectAnnee,activity);
                                 }
                                 return true;
                             default:
@@ -265,6 +267,40 @@ public class AnneeAdapter extends RecyclerView.Adapter<AnneeAdapter.AnneeViewHol
             public void onClick(View view) {
 
                 updaterAnnee(a);
+                dialogBuilder.dismiss();
+            }
+        });
+
+        dialogBuilder.setView(dialogView);
+        dialogBuilder.show();
+
+    }
+
+
+    // Popup pour demander confirmation avant suppression
+    private void popupSupp(final Annee a, Activity activity){
+
+        final androidx.appcompat.app.AlertDialog dialogBuilder = new androidx.appcompat.app.AlertDialog.Builder(activity).create();
+        LayoutInflater inflater = LayoutInflater.from(activity);
+        View dialogView = inflater.inflate(R.layout.confirmation_dialog, null);
+
+        TextView tv = (TextView) dialogView.findViewById(R.id.textView);
+        tv.setText("Etes-vous sûrs de vouloir surpprimer l'année "+a.getNom()+" ?");
+
+        Button buttonConfirm = (Button) dialogView.findViewById(R.id.buttonSubmit);
+        Button buttonAnnule = (Button) dialogView.findViewById(R.id.buttonCancel);
+
+        buttonAnnule.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialogBuilder.dismiss();
+            }
+        });
+        buttonConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                SuppAnnee(a);
                 dialogBuilder.dismiss();
             }
         });
