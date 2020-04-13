@@ -71,7 +71,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
 
         holder.rond.setText(df.format(val));
 
-        if(val >= 10 && val <= 12){
+        if(val >= 10 && val < 12){
             holder.rond.setBackgroundResource(R.drawable.round_orange);
         }else if (val < 10){
             holder.rond.setBackgroundResource(R.drawable.round_red);
