@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/tri_notes_croissants"
+        android:title="Notes croissantes" />
+
+    <item
+        android:id="@+id/tri_notes_decroissants"
+        android:title="Notes décroissantes" />
+
+    <item
+        android:id="@+id/tri_coefs_croissants"
+        android:title="Coefficient croissantes" />
+
+    <item
+        android:id="@+id/tri_coefs_decroissants"
+        android:title="Coefficient décroissantes" />
+
+    <item
+        android:id="@+id/tri_ancien_recent"
+        android:title="Du plus ancien au plus récent" />
+
+    <item
+        android:id="@+id/tri_recent_ancien"
+        android:title="Du plus récent au plus ancien" />
+
+
+</menu>
