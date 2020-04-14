@@ -11,6 +11,7 @@ import android.view.SubMenu;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
+import com.jennifertestu.coeffapp.activity.AideActivity;
 import com.jennifertestu.coeffapp.DatabaseClient;
 import com.jennifertestu.coeffapp.R;
 import com.jennifertestu.coeffapp.activity.AnneeActivity;
@@ -174,6 +175,11 @@ public class MenuNav {
 
             @Override
             public boolean onMenuItemClick(MenuItem item) {
+
+                Intent activityAide = new Intent(mCtx.getApplicationContext(), AideActivity.class);
+                activityAide.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+                mCtx.startActivity(activityAide);
                 return false;
             }
         });

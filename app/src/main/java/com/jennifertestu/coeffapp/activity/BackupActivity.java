@@ -116,7 +116,7 @@ public class BackupActivity extends AppCompatActivity {
                 dst.close();
                 Toast.makeText(getBaseContext(), backupDB.toString(),
                         Toast.LENGTH_LONG).show();
-                tv.setText("Export réussi ! \nRetrouvez le fichier 'SauvegardeNotes.db' dans le dossier 'Téléchargement'");
+                tv.setText("Export réussi ! \nRetrouvez le fichier 'SauvegardeNotes.db' dans le dossier 'Téléchargements'");
             }
         } catch (Exception e) {
 

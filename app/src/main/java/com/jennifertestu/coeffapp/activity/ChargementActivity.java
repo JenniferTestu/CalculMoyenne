@@ -34,7 +34,7 @@ public class ChargementActivity extends AppCompatActivity {
                 // demarrer page
 
                 if(check==-1) {
-                    Intent intent = new Intent(getApplicationContext(), AnneeActivity.class);
+                    Intent intent = new Intent(getApplicationContext(), AideActivity.class);
                     startActivity(intent);
                     finish();
                 }else{
