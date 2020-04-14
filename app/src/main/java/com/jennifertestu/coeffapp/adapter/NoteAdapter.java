@@ -2,7 +2,6 @@ package com.jennifertestu.coeffapp.adapter;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.view.LayoutInflater;
@@ -65,7 +64,12 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
         Note n = noteList.get(position);
         holder.typeView.setText(n.getTypeDeNote().toString());
         holder.comView.setText(n.getCommentaire());
-        holder.coefView.setText(Integer.toString(n.getPoids()));
+
+        if(matiere.isMoyPond()==true) {
+            holder.coefView.setText("Poids : "+Integer.toString(n.getPoids()));
+        }else {
+            holder.coefView.setVisibility(holder.coefView.INVISIBLE);
+        }
 
         SimpleDateFormat formater = new SimpleDateFormat("d MMMM yyyy", Locale.FRANCE);
         holder.dateView.setText(formater.format(n.getDate()));

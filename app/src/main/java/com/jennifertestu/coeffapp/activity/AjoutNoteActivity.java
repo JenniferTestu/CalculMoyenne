@@ -61,6 +61,7 @@ public class AjoutNoteActivity extends AppCompatActivity {
 
                 finish();
                 Intent intent = new Intent(getApplicationContext(), NotesActivity.class);
+                intent.putExtra("matiere", matiere);
                 startActivity(intent);
 
             }
