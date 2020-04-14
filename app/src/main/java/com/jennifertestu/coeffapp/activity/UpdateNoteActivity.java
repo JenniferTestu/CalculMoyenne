@@ -204,7 +204,11 @@ public class UpdateNoteActivity extends AppCompatActivity {
 
     // Si le bouton précédent est cliqué
     public void onBackPressed() {
-        startActivity(new Intent(getApplicationContext(), NotesActivity.class));
+        finish();
+        Intent intent = new Intent(getApplicationContext(), NotesActivity.class);
+        intent.putExtra("matiere", matiere);
+        startActivity(intent);
+
     }
 
 }
