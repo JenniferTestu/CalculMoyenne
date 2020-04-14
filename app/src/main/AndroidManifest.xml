@@ -15,22 +15,32 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.AideActivity"></activity>
-        <activity android:name=".activity.BackupActivity" />
-        <activity android:name=".activity.AnneeActivity" />
-        <activity android:name=".activity.AjoutNoteActivity" />
-        <activity android:name=".activity.NotesActivity" />
-        <activity android:name=".activity.AjoutMatiereActivity" />
-        <activity android:name=".activity.UpdateMatiereActivity" />
-        <activity android:name=".activity.UpdateNoteActivity" />
-        <activity android:name=".activity.ChargementActivity">
+        <activity android:name=".activity.AideActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".activity.BackupActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activity.AnneeActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activity.AjoutNoteActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activity.NotesActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activity.AjoutMatiereActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activity.UpdateMatiereActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activity.UpdateNoteActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activity.ChargementActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.MainActivity" />
+        <activity android:name=".activity.MainActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>
