@@ -17,7 +17,7 @@
             android:layout_gravity="center"
             android:background="@drawable/round_blue"
             android:text="@string/item_default_moy"
-            android:textSize="50px"
+            android:textSize="45px"
             app:layout_constraintWidth_percent="0.5"
             android:layout_marginRight="10dp"
             android:textColor="@color/colorText"></Button>
