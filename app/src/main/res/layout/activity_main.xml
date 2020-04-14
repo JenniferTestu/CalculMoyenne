@@ -36,10 +36,10 @@
 
         <Button
             android:id="@+id/bouton_ajouter"
-            android:layout_width="75dp"
-            android:layout_height="75dp"
-            android:layout_marginRight="8dp"
-            android:background="@android:drawable/ic_menu_add"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/ic_add_circle_outline"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent"></Button>
 
