@@ -6,7 +6,6 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -86,8 +85,6 @@ public class UpdateNoteActivity extends AppCompatActivity {
         boutonValiderMaj.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Log.d(AjoutMatiereActivity.class.getSimpleName(),"Bouton ajouter cliqué");
 
                 updateNote();
 

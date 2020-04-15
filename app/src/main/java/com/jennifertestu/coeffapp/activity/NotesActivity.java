@@ -9,7 +9,6 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -123,13 +122,6 @@ public class NotesActivity extends AppCompatActivity {
                         .getAppDatabase()
                         .noteDAO()
                         .getAllByMatiere(matiere.getId());
-
-
-                //List<Note> noteList = matiere.getListeNotes();
-
-                for(Note n : noteList) {
-                    Log.i("Note de la liste",n.toString());
-                }
 
                 matiere.setListeNotes(noteList);
                 matiere.calculerMoy();

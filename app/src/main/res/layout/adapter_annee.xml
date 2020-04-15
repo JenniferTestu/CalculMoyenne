@@ -23,7 +23,7 @@
             android:id="@+id/item_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/item_default_name"
+            android:text="Nom de l'année"
             android:layout_toRightOf="@+id/rond"
             android:textColor="@color/colorText"></TextView>
 
@@ -32,7 +32,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/item_name"
-            android:text="@string/item_default_coef"
+            android:text="Nombre de période"
             android:layout_toRightOf="@+id/rond"
             android:textColor="@color/colorText"></TextView>
 

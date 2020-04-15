@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Coeff App</string>
+    <string name="app_name">Calcul Moyenne</string>
     <string name="item_default_coef">Valeur du coef</string>
     <string name="item_default_name">Nom de la matière</string>
     <string name="item_default_derDate">Pas de notes enregistrées</string>
