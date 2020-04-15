@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.jennifertestu.coeffapp">
+    package="com.jennifertestu.calculmoyenne">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -15,23 +15,23 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.AideActivity"
+        <activity android:name="com.jennifertestu.calculmoyenne.activity.AideActivity"
             android:screenOrientation="portrait"></activity>
-        <activity android:name=".activity.BackupActivity"
+        <activity android:name="com.jennifertestu.calculmoyenne.activity.BackupActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".activity.AnneeActivity"
+        <activity android:name="com.jennifertestu.calculmoyenne.activity.AnneeActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".activity.AjoutNoteActivity"
+        <activity android:name="com.jennifertestu.calculmoyenne.activity.AjoutNoteActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".activity.NotesActivity"
+        <activity android:name="com.jennifertestu.calculmoyenne.activity.NotesActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".activity.AjoutMatiereActivity"
+        <activity android:name="com.jennifertestu.calculmoyenne.activity.AjoutMatiereActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".activity.UpdateMatiereActivity"
+        <activity android:name="com.jennifertestu.calculmoyenne.activity.UpdateMatiereActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".activity.UpdateNoteActivity"
+        <activity android:name="com.jennifertestu.calculmoyenne.activity.UpdateNoteActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".activity.ChargementActivity"
+        <activity android:name="com.jennifertestu.calculmoyenne.activity.ChargementActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -39,7 +39,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.MainActivity"
+        <activity android:name="com.jennifertestu.calculmoyenne.activity.MainActivity"
             android:screenOrientation="portrait"/>
     </application>
 
