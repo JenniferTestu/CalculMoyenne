@@ -235,7 +235,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
         View dialogView = inflater.inflate(R.layout.confirmation_dialog, null);
 
         TextView tv = (TextView) dialogView.findViewById(R.id.textView);
-        tv.setText("Etes-vous sûrs de vouloir surpprimer la note de "+n.getValeur()+" ?");
+        tv.setText("Etes-vous sûrs de vouloir surpprimer la note de \""+n.getValeur()+"\" ?");
 
         Button buttonConfirm = (Button) dialogView.findViewById(R.id.buttonSubmit);
         Button buttonAnnule = (Button) dialogView.findViewById(R.id.buttonCancel);

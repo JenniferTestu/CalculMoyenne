@@ -17,15 +17,20 @@ public class AideAdapter extends PagerAdapter {
     private Context context;
     private LayoutInflater layoutInflater;
 
-    private int[] imagesArray ={R.drawable.aide1,R.drawable.aide2,R.drawable.aide3,R.drawable.aide4,R.drawable.aide5};
-    private String[] titresArray ={"Avec vous, quel que soit le niveau d’étude"
+    // Gif d'illustration
+    private int[] imagesArray ={R.drawable.aide1,R.drawable.aide2,R.drawable.aide3,R.drawable.aide4,R.drawable.aide5,R.drawable.aide6};
+    // Titres de chaque page
+    private String[] titresArray ={"Avec vous, quel que soit le niveau d’études"
             ,"Surveillez vos moyennes"
+            ,"Groupez vos matières"
             ,"Répertoriez vos notes"
             ,"Partagez vos notes"
             ,"Sauvegardez vos données"
     };
-    private String[] detailsArray ={"Gérez vos années d’étude que vous soyez au collège, lycée, ou en études supérieures."
+    //Details dans chaque page
+    private String[] detailsArray ={"Gérez vos années d’études que vous soyez au collège, lycée, ou en études supérieures."
             ,"Ajoutez les matières ainsi que leur coefficient et gardez un œil sur chaque moyenne, y compris la moyenne générale."
+            ,"Utile si vous êtes en étude supérieure, vous avez la possibilité de grouper des matières dans des modules."
             ,"Que ce soit un écrit, un oral, un TP ou un devoir, ajoutez vos notes /20 tout au long de l’année. Si les notes ont des poids différents dans la matière, il y a une option pour ça."
             ,"Envie de communiquer une note ou une moyenne à vos amis ou votre famille ? Partagez la nouvelle."
             ,"Il est possible de sauvegarder toutes vos notes et de les restaurer sur un autre appareil."

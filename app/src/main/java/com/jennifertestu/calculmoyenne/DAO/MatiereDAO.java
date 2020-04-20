@@ -34,4 +34,10 @@ public interface MatiereDAO {
     @Query("DELETE FROM Matiere WHERE id_annee = :id_a")
     void deleteByAnnee(int id_a);
 
+    @Query("DELETE FROM Matiere WHERE id_module = :id_m")
+    void deleteByModule(int id_m);
+
+    @Query("SELECT * FROM Matiere WHERE id_module = :id_m")
+    List<Matiere> getAllByModule(int id_m);
+
 }

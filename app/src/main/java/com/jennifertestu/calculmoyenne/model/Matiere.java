@@ -31,12 +31,16 @@ public class Matiere implements Comparable<Matiere>,Serializable {
     @ColumnInfo(name="id_annee")
     private int idAnnee;
 
-    // Id de la péridiode à laquelle la matière est rattachée
+    // Numéro de la période à laquelle la matière est rattachée
     private int periode;
+
+    // Id de l'année à laquelle la matière est rattachée
+    @ColumnInfo(name="id_module")
+    private int idModule;
 
     // La moyenne de la matiere
     @Ignore
-    private double moy = 0;
+    private double moy ;
 
     // Liste des notes associées à cette matière
     @Ignore
@@ -51,6 +55,7 @@ public class Matiere implements Comparable<Matiere>,Serializable {
         this.moyPond = moyPond; // a enlever
         //this.listeNotes = new ArrayList<>();
     }
+
 
     public int getId() {
         return id;
@@ -127,11 +132,20 @@ public class Matiere implements Comparable<Matiere>,Serializable {
         return moy;
     }
 
+    public int getIdModule() {
+        return idModule;
+    }
+
+    public void setIdModule(int idModule) {
+        this.idModule = idModule;
+    }
+
     public double calculerMoy(){
 
         // Si il n'y a pas de notes, on renvoie une valeur négative
-        if(listeNotes==null){
-            return -1;
+        if(listeNotes.isEmpty() || listeNotes==null){
+            moy = -1;
+            return moy;
         }else {
             moy = 0;
             int poids = 0;

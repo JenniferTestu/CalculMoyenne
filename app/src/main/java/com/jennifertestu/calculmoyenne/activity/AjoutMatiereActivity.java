@@ -6,18 +6,19 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jennifertestu.calculmoyenne.DatabaseClient;
 import com.jennifertestu.calculmoyenne.R;
 import com.jennifertestu.calculmoyenne.model.Matiere;
+import com.jennifertestu.calculmoyenne.model.Module;
 
 import java.util.ArrayList;
 
@@ -29,7 +30,10 @@ public class AjoutMatiereActivity extends AppCompatActivity {
     private ArrayList<Integer> arraySpinner;
     private int idAnnee;
     private int nbPeriode;
+    private boolean isModule;
     private int periodeSelect;
+    private ArrayList<Module> arraySpinnerModule;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,18 +49,35 @@ public class AjoutMatiereActivity extends AppCompatActivity {
         SharedPreferences prefs = getSharedPreferences("annee_active", MODE_PRIVATE);
         idAnnee = prefs.getInt("id", 0);//"No name defined" is the default value.
         nbPeriode = prefs.getInt("nbperiode", 0);//"No name defined" is the default value.
+        isModule = prefs.getBoolean("ismodule", false);//"No name defined" is the default value.
 
 
-        // Création de la liste déroulante pour naviguer entre les périodes
-        arraySpinner = new ArrayList<Integer>();
-        for(int compt=1;compt <= nbPeriode;compt++){
-            arraySpinner.add(compt);
+        // Création de la liste déroulante pour naviguer entre les périodes ou modules
+        if(isModule==false) {
+            arraySpinner = new ArrayList<Integer>();
+            for (int compt = 1; compt <= nbPeriode; compt++) {
+                arraySpinner.add(compt);
+            }
+            ArrayAdapter<Integer> adapter = new ArrayAdapter<Integer>(this,
+                    android.R.layout.simple_spinner_item, arraySpinner);
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            s.setAdapter(adapter);
+        }else{
+            arraySpinnerModule = (ArrayList<Module>) DatabaseClient
+                    .getInstance(getApplicationContext())
+                    .getAppDatabase()
+                    .moduleDAO()
+                    .getAllByAnnee(idAnnee);
+            ArrayAdapter<Module> adapter = new ArrayAdapter<Module>(this,
+                    android.R.layout.simple_spinner_item, arraySpinnerModule);
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            s.setAdapter(adapter);
+
+            TextView tv = findViewById(R.id.textPeriode);
+            tv.setText("Matière rattachée au module : ");
         }
 
-        ArrayAdapter<Integer> adapter = new ArrayAdapter<Integer>(this,
-                android.R.layout.simple_spinner_item, arraySpinner);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        s.setAdapter(adapter);
+
 
         // Bouton pour annuler l'ajout et retourner à la liste
         Button boutonAnnuler = (Button)findViewById(R.id.bouton_annuler);
@@ -76,8 +97,6 @@ public class AjoutMatiereActivity extends AppCompatActivity {
         boutonValiderAjouter.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Log.d(AjoutMatiereActivity.class.getSimpleName(), "Bouton ajouter cliqué");
-
                     ajouterMatiere();
                 }
         });
@@ -107,15 +126,28 @@ public class AjoutMatiereActivity extends AppCompatActivity {
         final String sNom = editNom.getText().toString().trim();
         final int sCoef = Integer.parseInt(editCoef.getText().toString().trim());
         final boolean sMoyPond = editMoyPond.isChecked();
-        final int sPeriode = (int) s.getSelectedItem();
+        int sPeriode = 1;
+        Module sModule = null;
 
+        if(isModule==false) {
+            sPeriode = (int) s.getSelectedItem();
+        }else{
+            sModule = (Module) s.getSelectedItem();
+        }
+
+        final int finalSPeriode = sPeriode;
+        final Module finalSModule = sModule;
         class AjoutMatiere extends AsyncTask<Void, Void, Void> {
 
             //Ajout dans la BDD de la matiere
             @Override
             protected Void doInBackground(Void... voids) {
 
-                Matiere matiere = new Matiere(idAnnee,sPeriode,sNom,sCoef,sMoyPond);
+                Matiere matiere = new Matiere(idAnnee, finalSPeriode,sNom,sCoef,sMoyPond);
+
+                if(isModule==true){
+                    matiere.setIdModule(finalSModule.getId());
+                }
 
                 DatabaseClient.getInstance(getApplicationContext()).getAppDatabase()
                         .matiereDAO()

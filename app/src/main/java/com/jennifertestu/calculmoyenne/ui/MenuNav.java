@@ -39,7 +39,9 @@ public class MenuNav {
         int id = prefs.getInt("id", 0);//"No name defined" is the default value.
         String nom = prefs.getString("nom", "Pas de nom"); //0 is the default value.
         int nbperiode = prefs.getInt("nbperiode", 0);//"No name defined" is the default value.
-        anneeActive = new Annee(nom,nbperiode);
+        final boolean isModule = prefs.getBoolean("ismodule", false);//"No name defined" is the default value.
+
+        anneeActive = new Annee(nom,nbperiode,isModule);
         anneeActive.setId(id);
     }
 
@@ -85,6 +87,8 @@ public class MenuNav {
                             editor.putInt("id", a.getId());
                             editor.putString("nom", a.getNom());
                             editor.putInt("nbperiode", a.getNbPeriodes());
+                            editor.putBoolean("ismodule", a.isAvecModule());
+
                             editor.apply();
 
                             // Rafraichir l'activité

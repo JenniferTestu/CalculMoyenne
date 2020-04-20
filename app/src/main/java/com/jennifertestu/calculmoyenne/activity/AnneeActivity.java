@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -27,7 +28,7 @@ import java.util.List;
 public class AnneeActivity extends AppCompatActivity {
 
     private EditText editNom, editNb;
-
+    private CheckBox editIsModule;
     private RecyclerView recyclerView;
     private Annee anneeActive;
 
@@ -48,7 +49,9 @@ public class AnneeActivity extends AppCompatActivity {
         int id = prefs.getInt("id", 0);//"No name defined" is the default value.
         String nom = prefs.getString("nom", "Pas de nom"); //0 is the default value.
         int nbperiode = prefs.getInt("nbperiode", 0);//"No name defined" is the default value.
-        anneeActive = new Annee(nom,nbperiode);
+        boolean isModule = prefs.getBoolean("ismodule", false);//"No name defined" is the default value.
+
+        anneeActive = new Annee(nom,nbperiode,isModule);
         anneeActive.setId(id);
 
         // Appel de la fonction pour la création du menu pour naviguer entre les années
@@ -112,6 +115,7 @@ public class AnneeActivity extends AppCompatActivity {
 
         editNom = (EditText) dialogView.findViewById(R.id.editNomAnnee);
         editNb = (EditText) dialogView.findViewById(R.id.editNb);
+        editIsModule = (CheckBox) dialogView.findViewById(R.id.editIsModule);
 
         Button buttonAjout = (Button) dialogView.findViewById(R.id.buttonSubmit);
         Button buttonAnnule = (Button) dialogView.findViewById(R.id.buttonCancel);
@@ -158,6 +162,7 @@ public class AnneeActivity extends AppCompatActivity {
 
         final String sNom = editNom.getText().toString().trim();
         final int sNb = Integer.parseInt(editNb.getText().toString().trim());
+        final boolean sModule = editIsModule.isChecked();
 
 
         class AjoutAnnee extends AsyncTask<Void, Void, Void> {
@@ -165,10 +170,10 @@ public class AnneeActivity extends AppCompatActivity {
             @Override
             protected Void doInBackground(Void... voids) {
 
-                //creating a task
-                Annee annee = new Annee(sNom,sNb);
+                //Creation de l'année à ajouter
+                Annee annee = new Annee(sNom,sNb,sModule);
 
-                //adding to database
+                //Ajouter à la BDD
                 DatabaseClient.getInstance(getApplicationContext()).getAppDatabase()
                         .anneeDAO()
                         .insert(annee);

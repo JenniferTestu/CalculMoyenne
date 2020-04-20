@@ -78,6 +78,7 @@ public class MatiereAdapter extends RecyclerView.Adapter<MatiereAdapter.MatiereV
             holder.derDateView.setText("Date de la dernière note : "+formater.format(m.getDateDerniereNote()));
         }
 
+        // Double moy = m.getMoy();
         Double moy = m.calculerMoy();
 
 
@@ -253,7 +254,7 @@ public class MatiereAdapter extends RecyclerView.Adapter<MatiereAdapter.MatiereV
         View dialogView = inflater.inflate(R.layout.confirmation_dialog, null);
 
         TextView tv = (TextView) dialogView.findViewById(R.id.textView);
-        tv.setText("Etes-vous sûrs de vouloir surpprimer la matière "+m.getNom()+" ?");
+        tv.setText("Etes-vous sûrs de vouloir supprimer la matière \""+m.getNom()+"\" ainsi que toutes ses notes ?");
 
         Button buttonConfirm = (Button) dialogView.findViewById(R.id.buttonSubmit);
         Button buttonAnnule = (Button) dialogView.findViewById(R.id.buttonCancel);

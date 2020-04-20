@@ -15,14 +15,14 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:padding="10dp"
-        android:text="Libellé de l'année"
+        android:text="Libellé du module"
         android:textColor="@android:color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/editNomAnnee"
+        android:id="@+id/editNomModule"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -43,49 +43,24 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:padding="10dp"
-        android:text="Nombre de période dans l'année"
+        android:text="Rattaché à la période :"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editNomAnnee"
+        app:layout_constraintTop_toBottomOf="@+id/editNomModule"
         android:textColor="@android:color/black" />
 
-    <EditText
+    <Spinner
         android:id="@+id/editNb"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:padding="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nbView"
-        android:inputType="number"
-        android:textColor="@android:color/black" />
-
-    <TextView
-        android:id="@+id/isModuleView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:padding="10dp"
-        android:text="Les matières seront dans des modules ?"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editNb"
-        android:textColor="@android:color/black" />
-
-    <CheckBox
-        android:id="@+id/editIsModule"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="15dp"
-        android:textColor="@color/colorText"
+        android:background="#203575"
+        android:popupBackground="#203575"
+        android:textColor="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/isModuleView" />
+        app:layout_constraintTop_toBottomOf="@+id/nbView"/>
+
 
     <Button
         android:id="@+id/buttonSubmit"
@@ -96,7 +71,7 @@
         android:text="Ajouter"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editIsModule"
+        app:layout_constraintTop_toBottomOf="@+id/editNb"
         android:background="#203575" />
 
     <Button
@@ -108,7 +83,7 @@
         android:text="Annuler"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editIsModule"
+        app:layout_constraintTop_toBottomOf="@+id/editNb"
         android:background="#203575" />
 
 

@@ -48,7 +48,9 @@ public class AnneeAdapter extends RecyclerView.Adapter<AnneeAdapter.AnneeViewHol
         int id = prefs.getInt("id", 0);//"No name defined" is the default value.
         String nom = prefs.getString("nom", "Pas de nom"); //0 is the default value.
         int nbperiode = prefs.getInt("nbperiode", 0);//"No name defined" is the default value.
-        anneeActive = new Annee(nom,nbperiode);
+        final boolean isModule = prefs.getBoolean("ismodule", false);//"No name defined" is the default value.
+
+        anneeActive = new Annee(nom,nbperiode,isModule);
         anneeActive.setId(id);
     }
 
@@ -66,6 +68,11 @@ public class AnneeAdapter extends RecyclerView.Adapter<AnneeAdapter.AnneeViewHol
 
         Annee a = anneeList.get(position);
         holder.nomView.setText(a.getNom());
+        if(a.isAvecModule()==true) {
+            holder.avecModule.setText("Avec modules");
+        }else {
+            holder.avecModule.setText("Sans modules");
+        }
         holder.nbPeriodeView.setText("Composée de " +Integer.toString(a.getNbPeriodes())+" période(s)");
 
         if(a.getId()==anneeActive.getId()){
@@ -124,7 +131,7 @@ public class AnneeAdapter extends RecyclerView.Adapter<AnneeAdapter.AnneeViewHol
     // On récupére tous les champs à completer
     class AnneeViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        TextView nomView, nbPeriodeView, buttonViewOption;
+        TextView nomView, nbPeriodeView, avecModule, buttonViewOption;
         Button rond;
 
         public AnneeViewHolder(View itemView) {
@@ -132,6 +139,7 @@ public class AnneeAdapter extends RecyclerView.Adapter<AnneeAdapter.AnneeViewHol
 
             nomView = itemView.findViewById(R.id.item_name);
             nbPeriodeView = itemView.findViewById(R.id.item_nbPeriode);
+            avecModule = itemView.findViewById(R.id.item_avecModule);
             rond = itemView.findViewById(R.id.rond);
             buttonViewOption = itemView.findViewById(R.id.matiereOptions);
 
@@ -147,6 +155,8 @@ public class AnneeAdapter extends RecyclerView.Adapter<AnneeAdapter.AnneeViewHol
             editor.putInt("id", annee.getId());
             editor.putString("nom", annee.getNom());
             editor.putInt("nbperiode", annee.getNbPeriodes());
+            editor.putBoolean("ismodule", annee.isAvecModule());
+
             editor.apply();
 
             Intent intent = new Intent(mCtx, MainActivity.class);
@@ -232,7 +242,7 @@ public class AnneeAdapter extends RecyclerView.Adapter<AnneeAdapter.AnneeViewHol
                 //data.set(updateIndex, newValue);
                 activity.finish();
                 mCtx.startActivity(new Intent(mCtx.getApplicationContext(), AnneeActivity.class));
-                Toast.makeText(mCtx.getApplicationContext(), "Année supprimée", Toast.LENGTH_LONG).show();
+                Toast.makeText(mCtx.getApplicationContext(), "Année modifiée", Toast.LENGTH_LONG).show();
             }
         }
 
@@ -283,7 +293,7 @@ public class AnneeAdapter extends RecyclerView.Adapter<AnneeAdapter.AnneeViewHol
         View dialogView = inflater.inflate(R.layout.confirmation_dialog, null);
 
         TextView tv = (TextView) dialogView.findViewById(R.id.textView);
-        tv.setText("Etes-vous sûrs de vouloir surpprimer l'année "+a.getNom()+" ?");
+        tv.setText("Etes-vous sûrs de vouloir surpprimer l'année \""+a.getNom()+"\" ainsi que toutes ses matières et ses notes ?");
 
         Button buttonConfirm = (Button) dialogView.findViewById(R.id.buttonSubmit);
         Button buttonAnnule = (Button) dialogView.findViewById(R.id.buttonCancel);

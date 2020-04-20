@@ -10,18 +10,26 @@ import java.util.List;
 @Entity
 public class Annee {
 
+    // Id de l'année
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name="id_annee")
     private int id;
+    // Nom pour désigner cette année
     private String nom;
+    // Année en cours ou pas
     private Boolean actif;
+    // Nombre de période qui la compose
     private int nbPeriodes;
+    // Année divisé en module ou pas
+    private boolean avecModule;
+    // Liste des modules
     @Ignore
-    private List<Periode> listePeriodes;
+    private List<Module> listeModules;
 
-    public Annee(String nom, int nbPeriodes) {
+    public Annee(String nom, int nbPeriodes, boolean avecModule) {
         this.nom = nom;
         this.nbPeriodes = nbPeriodes;
+        this.avecModule = avecModule;
     }
 
     public int getNbPeriodes() {
@@ -56,11 +64,19 @@ public class Annee {
         this.actif = actif;
     }
 
-    public List<Periode> getListePeriodes() {
-        return listePeriodes;
+    public List<Module> getListeModules() {
+        return listeModules;
     }
 
-    public void setListePeriodes(List<Periode> listePeriodes) {
-        this.listePeriodes = listePeriodes;
+    public void setListeModules(List<Module> listeModules) {
+        this.listeModules = listeModules;
+    }
+
+    public boolean isAvecModule() {
+        return avecModule;
+    }
+
+    public void setAvecModule(boolean avecModule) {
+        this.avecModule = avecModule;
     }
 }
