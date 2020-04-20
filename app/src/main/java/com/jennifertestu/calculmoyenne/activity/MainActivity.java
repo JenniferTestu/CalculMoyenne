@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -48,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
     private Button button;
     private DecimalFormat df = new DecimalFormat("#.##");
     private double moyG = 0.0;
-    private int coefs = 0;
+    private double coefs = 0.0;
     private ArrayList<String> arraySpinner = new ArrayList<String>();
     private Annee anneeActive;
     private int periodeSelect;
@@ -300,6 +301,7 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 moyG = moyG / coefs;
+
 
                 return modulesList;
             }
@@ -572,6 +574,11 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+        if(adapter.getGroupCount()==0){
+            buttonMatiere.setEnabled(false);
+            buttonMatiere.setBackgroundColor(Color.GRAY);
+        }
 
         dialogBuilder.setView(dialogView);
         dialogBuilder.show();

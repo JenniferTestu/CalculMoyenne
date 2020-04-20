@@ -50,16 +50,8 @@ public class NotesActivity extends AppCompatActivity {
         textMoy.setText("Moyenne de "+matiere.getNom()+" : ");
 
         button = (Button) findViewById(R.id.button);
-        /*
-        button.setText(df.format(matiere.getMoy()));
-        if(matiere.getMoy() >= 10 && matiere.getMoy() <= 12){
-            button.setBackgroundResource(R.drawable.round_orange);
-        }else if (matiere.getMoy() < 10){
-            button.setBackgroundResource(R.drawable.round_red);
-        }else{
-            button.setBackgroundResource(R.drawable.round_blue);
-        }
-*/
+
+
         if(matiere.getMoy() >= 10 && matiere.getMoy() < 12){
             button.setText(df.format(matiere.getMoy()));
             button.setBackgroundResource(R.drawable.round_orange);

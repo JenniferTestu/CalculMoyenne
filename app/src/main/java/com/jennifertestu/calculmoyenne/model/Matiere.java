@@ -22,7 +22,7 @@ public class Matiere implements Comparable<Matiere>,Serializable {
     private String nom;
 
     // Coefficient de la matiere
-    private int coef;
+    private double coef;
 
     // La moyenne de cette matiere est-elle pondéré ?
     private boolean moyPond;
@@ -47,7 +47,7 @@ public class Matiere implements Comparable<Matiere>,Serializable {
     private List<Note> listeNotes;
 
 
-    public Matiere(int idAnnee, int periode, String nom, int coef, boolean moyPond) {
+    public Matiere(int idAnnee, int periode, String nom, double coef, boolean moyPond) {
         this.idAnnee = idAnnee;
         this.periode = periode;
         this.nom = nom;
@@ -73,11 +73,11 @@ public class Matiere implements Comparable<Matiere>,Serializable {
         this.nom = nom;
     }
 
-    public int getCoef() {
+    public double getCoef() {
         return coef;
     }
 
-    public void setCoef(int coef) {
+    public void setCoef(double coef) {
         this.coef = coef;
     }
 
@@ -148,7 +148,7 @@ public class Matiere implements Comparable<Matiere>,Serializable {
             return moy;
         }else {
             moy = 0;
-            int poids = 0;
+            double poids = 0.0;
 
             // Si cette matiere a une moyenne pondérée
             if (moyPond == true) {

@@ -244,7 +244,7 @@ public class ModuleMatiereAdapter extends BaseExpandableListAdapter {
 
         nomView.setText(matiere.getNom());
 
-        coefView.setText("Coefficient : "+Integer.toString(matiere.getCoef()));
+        coefView.setText("Coefficient : "+Double.toString(matiere.getCoef()));
         if(matiere.getDateDerniereNote()!=null) {
             SimpleDateFormat formater = new SimpleDateFormat("d MMMM yyyy", Locale.FRANCE);
             derDateView.setText("Date de la dernière note : "+formater.format(matiere.getDateDerniereNote()));
@@ -332,7 +332,7 @@ public class ModuleMatiereAdapter extends BaseExpandableListAdapter {
 
         class SuppMatiere extends AsyncTask<Void, Void, Void> {
 
-            //Supression dans la BDD de la matiere ainsi que ses notes
+            //Suppression dans la BDD de la matiere ainsi que ses notes
             @Override
             protected Void doInBackground(Void... voids) {
 

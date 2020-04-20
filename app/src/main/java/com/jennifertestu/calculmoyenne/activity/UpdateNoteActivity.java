@@ -77,7 +77,7 @@ public class UpdateNoteActivity extends AppCompatActivity {
         editNote.setText(Double.toString(noteUpdate.getValeur()));
         editType.setSelection(adapter.getPosition(noteUpdate.getTypeDeNote()));
         editCom.setText(noteUpdate.getCommentaire());
-        editPoids.setText(Integer.toString(noteUpdate.getPoids()));
+        editPoids.setText(Double.toString(noteUpdate.getPoids()));
 
         // Bouton pour l'edition
         Button boutonValiderMaj = (Button)findViewById(R.id.bouton_val_ajouter);

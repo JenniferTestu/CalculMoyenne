@@ -29,7 +29,7 @@ public class Module {
     private double moy = -1;
     // Somme des coefficients
     @Ignore
-    private int sumCoef;
+    private double sumCoef;
 
     public Module(String nom, int idAnnee, int periode) {
         this.nom = nom;
@@ -89,11 +89,11 @@ public class Module {
 
         if(listeMatieres==null || listeMatieres.isEmpty()){
             moy = -1.0;
-            sumCoef = 0;
+            sumCoef = 0.0;
             return moy;
         }else {
-            moy = 0;
-            sumCoef = 0;
+            moy = 0.0;
+            sumCoef = 0.0;
 
             for (Matiere m : listeMatieres) {
                 m.calculerMoy();
@@ -109,7 +109,7 @@ public class Module {
 
     }
 
-    public int getSumCoef() {
+    public double getSumCoef() {
         return sumCoef;
     }
 

@@ -103,7 +103,7 @@ public class UpdateMatiereActivity extends AppCompatActivity {
 
         // Remplir les champs
         editNom.setText(matiereUpdate.getNom());
-        editCoef.setText(Integer.toString(matiereUpdate.getCoef()));
+        editCoef.setText(Double.toString(matiereUpdate.getCoef()));
         if(matiereUpdate.isMoyPond()==true) {
             editMoyPond.setChecked(true);
         }
@@ -133,7 +133,7 @@ public class UpdateMatiereActivity extends AppCompatActivity {
             editNom.requestFocus();
             return;
         }
-        if (Integer.parseInt(editCoef.getText().toString().trim()) < 1){
+        if (Double.parseDouble(editCoef.getText().toString().trim()) < 1){
             editCoef.setError("Le coefficient doit être au minimum à 1");
             editCoef.requestFocus();
             return;
@@ -146,7 +146,7 @@ public class UpdateMatiereActivity extends AppCompatActivity {
 
 
         final String sNom = editNom.getText().toString().trim();
-        final int sCoef = Integer.parseInt(editCoef.getText().toString().trim());
+        final double sCoef = Double.parseDouble(editCoef.getText().toString().trim());
         final boolean sMoyPond = editMoyPond.isChecked();
         int sPeriode = 1;
         Module sModule = null;

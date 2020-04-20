@@ -72,7 +72,7 @@ public class MatiereAdapter extends RecyclerView.Adapter<MatiereAdapter.MatiereV
             holder.nomView.setText(m.getNom());
         }
 
-        holder.coefView.setText("Coefficient : "+Integer.toString(m.getCoef()));
+        holder.coefView.setText("Coefficient : "+Double.toString(m.getCoef()));
         if(m.getDateDerniereNote()!=null) {
             SimpleDateFormat formater = new SimpleDateFormat("d MMMM yyyy", Locale.FRANCE);
             holder.derDateView.setText("Date de la dernière note : "+formater.format(m.getDateDerniereNote()));

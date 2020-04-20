@@ -66,7 +66,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
         holder.comView.setText(n.getCommentaire());
 
         if(matiere.isMoyPond()==true) {
-            holder.coefView.setText("Poids : "+Integer.toString(n.getPoids()));
+            holder.coefView.setText("Poids : "+Double.toString(n.getPoids()));
         }else {
             holder.coefView.setVisibility(holder.coefView.INVISIBLE);
         }

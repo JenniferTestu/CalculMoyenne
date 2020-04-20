@@ -115,7 +115,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textPoids"
-        android:inputType="number"/>
+        android:inputType="numberDecimal"/>
 
     <LinearLayout
         android:id="@+id/linearLayout"

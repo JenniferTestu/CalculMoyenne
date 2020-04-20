@@ -134,7 +134,7 @@ public class AjoutNoteActivity extends AppCompatActivity {
             editPoids.requestFocus();
             return;
         }
-        if (matiere.isMoyPond()==true && Integer.parseInt(editPoids.getText().toString().trim()) <1) {
+        if (matiere.isMoyPond()==true && Double.parseDouble(editPoids.getText().toString().trim()) <1) {
             editPoids.setError("Le poids doit être au minimum à 1");
             editPoids.requestFocus();
             return;
@@ -149,12 +149,12 @@ public class AjoutNoteActivity extends AppCompatActivity {
         final double sVal = Double.parseDouble(editNote.getText().toString().trim());
         final TypeDeNote sType = TypeDeNote.valueOf(editType.getSelectedItem().toString().trim());
         final String sCom = editCom.getText().toString().trim();
-        final int sPoids;
+        final double sPoids;
 
         if(matiere.isMoyPond()==false){
             sPoids = 1;
         }else {
-            sPoids = Integer.parseInt(editPoids.getText().toString().trim());
+            sPoids = Double.parseDouble(editPoids.getText().toString().trim());
         }
 
 

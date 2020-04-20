@@ -31,7 +31,7 @@ public class Note implements Comparable<Note>, Serializable {
     private String commentaire;
     // Poids de la note
     @Nullable
-    private int poids;
+    private double poids;
     // Identifiant de la matière a laquelle la note est rattachée
     @ColumnInfo(name="id_matiere")
     private int idMatiere;
@@ -85,11 +85,11 @@ public class Note implements Comparable<Note>, Serializable {
         this.commentaire = commentaire;
     }
 
-    public int getPoids() {
+    public double getPoids() {
         return poids;
     }
 
-    public void setPoids(int poids) {
+    public void setPoids(double poids) {
         this.poids = poids;
     }
 
